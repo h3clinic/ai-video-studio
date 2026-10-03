@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  color-scheme: dark;
+  --canvas: #1b1b1b;
+  --chrome: #171717;
+  --sidebar: #171717;
+  --panel: #202020;
+  --hover: #292929;
+  --selected: #333333;
+  --line: #303030;
+  --line-soft: #292929;
+  --line-strong: #555555;
+  --text: #d0d0d0;
+  --muted: #9a9a9a;
+  --faint: #707070;
+}
+
+.light {
+  color-scheme: light;
+  --canvas: #ffffff;
+  --chrome: #fafafa;
+  --sidebar: #f7f7f7;
+  --panel: #f0f0f0;
+  --hover: #eeeeee;
+  --selected: #e4e4e4;
+  --line: #e0e0e0;
+  --line-soft: #eaeaea;
+  --line-strong: #cccccc;
+  --text: #1a1a1a;
+  --muted: #707070;
+  --faint: #999999;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--canvas);
+  color: var(--text);
+}
+button, input, select, textarea { font: inherit; }
+button {
+  min-height: 30px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: var(--hover); }
+button:disabled { cursor: not-allowed; opacity: .45; }
+button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid rgba(160, 160, 160, .28);
+  outline-offset: 1px;
+}
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { border: 3px solid transparent; background: #5a5a5a; background-clip: padding-box; }
+.light ::-webkit-scrollbar-thumb { background: #c0c0c0; background-clip: padding-box; }
+
+.drag-region { -webkit-app-region: drag; }
+.no-drag { -webkit-app-region: no-drag; }
