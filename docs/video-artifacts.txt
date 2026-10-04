@@ -1,0 +1,64 @@
+Video artifacts — no slide layouts
+=================================
+
+tools/render-artifact-cut.py makes reusable clips from existing source media.
+It does not make slides, render model results, or call an API.
+
+python tools/render-artifact-cut.py --plan PATH/artifact-plan.json --script docs/demo-script.txt --output-dir PATH/new-artifact-pack
+
+Requires a local Python environment with numpy, scipy, Pillow and FFmpeg
+(imageio-ffmpeg or --ffmpeg PATH). --frontend defaults to this repository.
+The output directory must not exist; previous results are preserved.
+
+Outputs
+-------
+agents/agent-49.mov through agent-62.mov: original three-second illustrations,
+24 fps, lossless QuickTime Animation with an alpha channel. Import them as
+overlays in an editor that supports alpha MOV. Black in some media players
+is the transparency preview, not a baked-in background. PNG previews also
+retain alpha. Background removal preserves enclosed white details; inspect
+the artwork against your intended background before compositing.
+
+clips/: standalone cropped MP4s from actual app recordings and the source
+scene. No presentation headers, page numbers or decorative borders.
+
+artifact_cut_clean.mp4: three-minute 1080p edit with no presentation graphics
+or burned-in captions. Existing generated audio appears at 1:35–2:10.
+
+artifact_cut_subtitles.mp4: same edit with a selectable English subtitle track.
+narration.srt: separate estimated captions for the human narration script.
+manifest.json: source hashes, crops, timings, loops and held frames.
+edit/: intermediate clips for rebuilding; these are not extra model results.
+
+Plan format
+-----------
+{
+  "sound_mix": "scene_with_sound.mp4",
+  "clips": {
+    "source-video": {"source": "scene_with_sound.mp4", "seconds": 5},
+    "history": {"source": "app-only.mp4", "start": 146, "seconds": 14,
+                "crop": [1598, 836, 890, 532]}
+  },
+  "shots": [{"asset": "source-video", "seconds": 8},
+            {"asset": "history", "seconds": 172}]
+}
+
+Replace these example timings with verified source excerpts. Shot durations
+must total 180 seconds. Paths resolve relative to the plan. Crops use source
+pixels. Agent IDs are agent-49 through agent-62. Agent art and source-video
+loop; short UI clips hold their final genuine frame. There is no synthesized
+voice. All reuse/holds are logged, not represented as longer generation.
+
+The current Gaussian replacement remains unvalidated. Role illustrations and
+completed briefs are not proof of edited geometry. Do not use a sound-enhanced
+source clip as evidence of a successful apple replacement or compute savings.
+
+Tests: python -B -m unittest discover -s tools/tests -p test_artifact_cut.py -v
+
+Optional final trimming pass:
+python tools/refine-artifact-cut.py --pack PATH/new-artifact-pack
+
+This measures the alpha envelope across every animation frame, creates
+trimmed-agents/ without overwriting agents/, and enlarges the agent cutaways.
+artifact_cut_final.mp4 and artifact_cut_final_subtitles.mp4 are the final cuts;
+refinement.json records the additional crop bounds and hashes.
