@@ -1,0 +1,2 @@
+# The source manifest pins exact bytes, independent of core.autocrlf.
+/backend/**/*.py -text

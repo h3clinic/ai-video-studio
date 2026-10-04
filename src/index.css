@@ -2,6 +2,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.agent-spotlight { display:flex; gap:22px; padding:18px 24px; border-bottom:1px solid var(--line); background:var(--panel); flex-shrink:0; }
+.agent-spotlight-art { width:228px; flex-shrink:0; position:relative; align-self:center; }
+.agent-spotlight-art img { width:100%; height:132px; object-fit:contain; border-radius:12px; background:#101010; }
+.agent-spotlight-art button { position:absolute; bottom:7px; right:7px; font-size:10px; padding:2px 7px; min-height:22px; color:#eee; background:#111c; border:1px solid #444; }
+.agent-spotlight-copy { min-width:0; flex:1; }
+.agent-eyebrow { display:flex; align-items:center; gap:7px; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.1em; }
+.agent-live-dot,.agent-idle-dot { width:7px; height:7px; border-radius:50%; background:#68d8b4; }
+.agent-idle-dot { background:var(--faint); }
+.agent-live-dot { animation:pulse 1.3s infinite; }
+.agent-spotlight h2 { font-size:23px; line-height:1.2; margin:6px 0; color:var(--text); }
+.agent-spotlight p { font-size:12px; line-height:1.5; }
+.agent-spotlight-detail { font-size:10px; margin-top:5px; color:var(--muted); max-height:35px; overflow:auto; }
+.agent-spotlight-actions { display:flex; gap:8px; align-items:center; margin:8px 0 3px; }
+.agent-spotlight-actions button { border:1px solid var(--line-strong); padding:4px 10px; font-size:11px; }
+.agent-spotlight-actions span,.agent-spotlight small { font-size:10px; color:var(--faint); }
+.owner-sound-settings { border:1px solid var(--line); border-radius:6px; padding:10px; margin-bottom:14px; }
+.owner-sound-settings > button { font-weight:600; text-align:left; }
+.owner-sound-settings p { color:var(--muted); font-size:10px; line-height:1.6; margin:7px 0; }
+.owner-sound-settings input { width:100%; background:var(--canvas); border:1px solid var(--line-strong); border-radius:4px; padding:9px; color:var(--text); margin:6px 0; }
+.owner-sound-settings label { display:block; font-size:11px; margin-top:8px; }
+.owner-sound-settings form button { border:1px solid var(--line-strong); padding:5px 10px; }
+@media (max-width:1150px) { .agent-spotlight-art{width:160px} .agent-spotlight-art img{height:104px} .agent-spotlight{padding:14px;gap:14px} .agent-spotlight-actions span{display:none} }
+@media (prefers-reduced-motion:reduce) { .agent-live-dot { animation:none; } }
+
 :root {
   color-scheme: dark;
   --canvas: #1b1b1b;
@@ -67,3 +91,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 
 .drag-region { -webkit-app-region: drag; }
 .no-drag { -webkit-app-region: no-drag; }
+/* Observable team formation: artwork is never used as execution evidence. */
+.live-swarm{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:16px;margin-bottom:20px;font-size:12px;line-height:1.55}
+.swarm-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}.swarm-heading h3{font-size:19px;margin:3px 0}.swarm-heading small{color:var(--muted);letter-spacing:.1em;font-size:9px}
+.live-swarm button{color:var(--text);background:var(--canvas);border:1px solid var(--line);border-radius:7px;cursor:pointer;padding:7px;font-size:11px}
+.swarm-counts{display:flex;gap:15px;color:var(--muted);margin:14px 0}.swarm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px}
+.swarm-worker{display:flex;align-items:flex-start;flex-direction:column;text-align:left;min-width:0}.swarm-worker img{width:100%;height:76px;object-fit:cover;border-radius:4px;margin-bottom:6px}.swarm-worker span,.swarm-worker small{color:var(--muted);font-size:10px}.swarm-worker.running{border-color:#4fc6a2;box-shadow:0 0 0 1px #4fc6a233}.swarm-worker[aria-pressed=true]{outline:2px solid #66a6ee}.swarm-worker.failed,.swarm-worker.blocked{border-color:#bb8855}
+.swarm-detail{display:grid;gap:8px;margin-top:14px;border-top:1px solid var(--line);padding-top:12px}.swarm-detail p{margin:0}.swarm-detail audio{width:100%}.swarm-detail small,.swarm-disclosure{font-size:10px;color:var(--muted)}
+.swarm-region-frame{position:relative;margin-top:12px}.swarm-region-frame>img{display:block;width:100%}.swarm-region-frame>button{position:absolute;border:2px solid #62edb5;background:#62edb510;padding:0;border-radius:0}.swarm-region-frame>button span{position:absolute;top:0;left:0;background:#153b31;color:#eafff7;padding:2px 4px}

@@ -1,0 +1,1622 @@
+[
+  {
+    "path": "real_video/__init__.py",
+    "sha256": "9ab02a7f8b49027e6a63c04ee217051547609dc2d2a902a397d86eedf545c588"
+  },
+  {
+    "path": "real_video/adaptive_gaussian_renderer.py",
+    "sha256": "a68961d8cf3881d6ad203e26cea570c810b394e61860be0cffc5d28551097126"
+  },
+  {
+    "path": "real_video/agentvideo_bridge.py",
+    "sha256": "9036e80c5b260764531ea41b61cc990865682c1da75e253ae92d26df836b659d"
+  },
+  {
+    "path": "real_video/agentvideo_decision_stage.py",
+    "sha256": "461f788870c184402a5d063f3fc3b6de92cc32e2e44aa0b8a38e286dbad0b182"
+  },
+  {
+    "path": "real_video/agentvideo_gemini.py",
+    "sha256": "67466af9d5ac796fe9f257fc412f7929b64c0463f5c42da298d73d7d05c74061"
+  },
+  {
+    "path": "real_video/agentvideo_parts.py",
+    "sha256": "6bcbdf3210897067416b36e3fc27ffd2333efbf408e0c5c9ee75e67ef5956ba7"
+  },
+  {
+    "path": "real_video/animal_control_graph.py",
+    "sha256": "253f939c4245ac623b06d183e471a9366e8cfa2fee2f766d494d058bef83611d"
+  },
+  {
+    "path": "real_video/animal_graph_data.py",
+    "sha256": "9f86ba0beb58e401ec51eb811e65a6d44fb632da848cf4be4ebc90037140a1ce"
+  },
+  {
+    "path": "real_video/articulated_gaussian.py",
+    "sha256": "9b3c2ab2036210c01712d0510792cdd23e014917b6efa7901ef37f83be6e7dc3"
+  },
+  {
+    "path": "real_video/articulation_quality.py",
+    "sha256": "3eb401fe0d996ae5338bc716fada9e1b25435ef0b4b7897625ac2da89a905e3e"
+  },
+  {
+    "path": "real_video/asset_readiness.py",
+    "sha256": "610adfbaaf11c864fcbf6b12507f969b732ef7dcd9837a1df6db4a56a15452d0"
+  },
+  {
+    "path": "real_video/attach_vector_weights.py",
+    "sha256": "35ff4590e6bb4be3f6f4d1618fdae0d0b6e5dccb5ad7f5737da3e389d841704f"
+  },
+  {
+    "path": "real_video/audit_animal_visual.py",
+    "sha256": "84c3e15c7bf0348b65a2ac8389cb403db1f241184f67ef0507918b223129d715"
+  },
+  {
+    "path": "real_video/audit_coherent_motion.py",
+    "sha256": "39dd48ce70fd6f4271312c256cb121e55e295b6c0919a0acfa2a8d3f613dd3c1"
+  },
+  {
+    "path": "real_video/audit_distillation.py",
+    "sha256": "3fe12674f233d5edab34fcd37c4c0590c2759f4649e8341df5703732f236979c"
+  },
+  {
+    "path": "real_video/audit_frozen_network.py",
+    "sha256": "78c49aa69524a3305e496958b7e1e7aaada90713a06a615f9370c5953012fa22"
+  },
+  {
+    "path": "real_video/audit_inference.py",
+    "sha256": "bcc3303c597bda4015927ef77e81864b44b5b48805152615beb3524d8298413e"
+  },
+  {
+    "path": "real_video/audit_latent_codec.py",
+    "sha256": "ea98cbe0a67cb9a724cf48a650bc0e65d8511b3795b06bf2bb92dd82b84aceb1"
+  },
+  {
+    "path": "real_video/audit_learned_motion.py",
+    "sha256": "6aefa5684ebd2a5dc971be4c83fc14b26ca7cab5d6ea4af399a80a6aa616c45d"
+  },
+  {
+    "path": "real_video/audit_motion_memory.py",
+    "sha256": "b5f3c94bf81c0bd5fc4c061c970b9019a987cb20474b8a7500baaea257596ea5"
+  },
+  {
+    "path": "real_video/audit_motion_update_repair.py",
+    "sha256": "8ec7521281444ccb7bb727b142517b699973ac038bfdab0771780d02b02d079e"
+  },
+  {
+    "path": "real_video/audit_precision.py",
+    "sha256": "a0320d8a13dabde4e969e19f8562262980fe0e3617d0ae631784f8da59eb9023"
+  },
+  {
+    "path": "real_video/audit_prompt_gaussian_video.py",
+    "sha256": "731c1c1e6278d7f40ff403c1f0d2340a19a97e7e2e88d96fe9f32076c463e56c"
+  },
+  {
+    "path": "real_video/audit_replay.py",
+    "sha256": "74e18b336c07f7ea7440b39ad47e7d160042986b7450eb02b3c8e06e065360b2"
+  },
+  {
+    "path": "real_video/audit_session.py",
+    "sha256": "3a120d872928b3f233202024aaa68f56b96bc048876b1c3303920d7cc34d2588"
+  },
+  {
+    "path": "real_video/audit_surface_motion.py",
+    "sha256": "069b753dd5db86ddf5f2409e0b2aae7e639c881cda21867c4bdb08cfea694f41"
+  },
+  {
+    "path": "real_video/audit_triposr_parity.py",
+    "sha256": "cadbebe3fe7aa4a033db60ff8b7e57bbf6fe5b7d20b33452e34499005465b206"
+  },
+  {
+    "path": "real_video/audit_true3d.py",
+    "sha256": "4ee322411351c218c54ce8e25c60ddb34b4e6af9e439330c4147698d44888213"
+  },
+  {
+    "path": "real_video/audit_wan22_preparation.py",
+    "sha256": "af9557d8bd0406e34fbb0e65605fa89f66bc6ce50b7ceacba0979ab70464e7b6"
+  },
+  {
+    "path": "real_video/audit_wan_baseline.py",
+    "sha256": "afc32d307cf7f504b442430520875917d519d816d43c7dd818689b8ebd6917f9"
+  },
+  {
+    "path": "real_video/audit_wan_decoder_benchmark.py",
+    "sha256": "073b8811f80f83729110bf9f304b0e49e8501803e884fccc0cedae158bf64392"
+  },
+  {
+    "path": "real_video/audit_wan_gaussian.py",
+    "sha256": "5a96cabcafb90a8fe82c6959b94c3fe9bd29b571a3ce29f9e7c3d9d100fd827b"
+  },
+  {
+    "path": "real_video/awake_research.py",
+    "sha256": "c1d4df584b6abc32d765f2c73a338c2a74b4ccf013613ce311658357e7e5cc71"
+  },
+  {
+    "path": "real_video/background_completion.py",
+    "sha256": "c031aec9151894fec85675e250c280ebda3df8db8d9c3422d3972f3fa66c994a"
+  },
+  {
+    "path": "real_video/benchmark.py",
+    "sha256": "a62163caea627ff06f5a8086542719bf35fed14ef11e40125233d1f3b2949f06"
+  },
+  {
+    "path": "real_video/benchmark_motion_only.py",
+    "sha256": "373d07af452577ca4929b01073fae3030abc4ef469e08c9a3526e86aa2f8970a"
+  },
+  {
+    "path": "real_video/benchmark_wan_decoders.py",
+    "sha256": "4133100f442f1d8ed121079ed7b9d2d31cd510b5ec54a93c58a5a76292da5df5"
+  },
+  {
+    "path": "real_video/build_runpod_bundle.py",
+    "sha256": "f637cb666eeca7405169983b8812d40d6c47bb117a87221e941ae945a9bec8c3"
+  },
+  {
+    "path": "real_video/capture_scene_gaussians.py",
+    "sha256": "963f541f6701b6035eca7ab24e0fd32719c08029e025886c978c1acfc460ef55"
+  },
+  {
+    "path": "real_video/checkpoint_io.py",
+    "sha256": "8c4cac5f8937aab9b1b4fb64df2779100c4b4dbafda7b44a4f18a01031ba6a59"
+  },
+  {
+    "path": "real_video/compare_motion_updates.py",
+    "sha256": "d3141d811259184e38c9d89113132ac2403ad849dff5ac1157b1bea26f60dfba"
+  },
+  {
+    "path": "real_video/compare_wan_bridges.py",
+    "sha256": "e00313cbbd39d7d16bec02124a3a1ccd13975ce7a515d65ca251918f93fcc910"
+  },
+  {
+    "path": "real_video/compose_dog_gaussians.py",
+    "sha256": "bebfd4011b3ed7f34a80c59aec94f4553241195f6dcafc50ef20595755b7d358"
+  },
+  {
+    "path": "real_video/connected_gaussian.py",
+    "sha256": "da0f3c1abeb69d478bc4b50ab6424633a1684385743dfe0042377904e207112a"
+  },
+  {
+    "path": "real_video/controller_rig.py",
+    "sha256": "4aa0997c3b7c7b54e6e2719ea9d85b9bccfa912f2b97d8339f40ce9865dfbdaf"
+  },
+  {
+    "path": "real_video/demo_animal_graph.py",
+    "sha256": "8b5127a9d84265a2a736ec33224731dc990cc92aec7ac48882911087cc676550"
+  },
+  {
+    "path": "real_video/demo_asset_bank.py",
+    "sha256": "9431ef368e75eeb3af9ef5ff34a612b03c847447ff62fafa0923daca500e0f76"
+  },
+  {
+    "path": "real_video/demo_connected_gaussian.py",
+    "sha256": "7c093d6257f44ec31f0d34acea9f54fbcd90d45d8f574cb01587abee21e7c62b"
+  },
+  {
+    "path": "real_video/demo_gaussian_controller.py",
+    "sha256": "e5991c60c0576f3c37a8ec091cabf17c43c0874ff148dcae481de922e81c5446"
+  },
+  {
+    "path": "real_video/demo_learned_motion.py",
+    "sha256": "71cf2bbee30cfcf95bd52011fda84ded1b89d5976e7db2fef8493dc966f97deb"
+  },
+  {
+    "path": "real_video/demo_persistent_gaussian.py",
+    "sha256": "ca274624c3841e966674dc074d7e69cf942729a134a8c49e14c66530534bf264"
+  },
+  {
+    "path": "real_video/demo_true3d.py",
+    "sha256": "0a0a22ab4c46db366b6ecb49a8a6454c50761b317372b7112531143f9f30f480"
+  },
+  {
+    "path": "real_video/dense_gaussian_seed.py",
+    "sha256": "8154cbe7e093cf8691f9b2f6033409c4f63fac5732a352b6402b54bed4b41da7"
+  },
+  {
+    "path": "real_video/dense_surface_fit.py",
+    "sha256": "925c1dbb2af18cbe58b1fced2d6f8ac026a556b760dbc0020cca24297569dda5"
+  },
+  {
+    "path": "real_video/detail_ablation.py",
+    "sha256": "84f7c0470dd3e926a14e247de0e6a2889688e964d460392e52eff01894affda3"
+  },
+  {
+    "path": "real_video/detail_lift.py",
+    "sha256": "e9ba23a23e3bc544bc416ed9bffcffd5202a5d7f97a12a5f075fcea2a3486dac"
+  },
+  {
+    "path": "real_video/diagnose_static_gaussian_footprints.py",
+    "sha256": "f3d43358984112cae56e723344216a28776b774eec181460655ad45e4074d287"
+  },
+  {
+    "path": "real_video/diagnose_wan22_decode.py",
+    "sha256": "c0c9556507b681fd6b72eae9dff7be08b4b0c931cd2c15503e3ac94d373b6493"
+  },
+  {
+    "path": "real_video/diagnostics.py",
+    "sha256": "e0ac7d113be8583757ef2e95b1d830790668774f721f3a574e632af9f00b414c"
+  },
+  {
+    "path": "real_video/distill_guidance.py",
+    "sha256": "e73a6135d9e2908886d982e104df60b8370cd72d547448dd264ad23f502dbea2"
+  },
+  {
+    "path": "real_video/dog_articulation.py",
+    "sha256": "78ae3dd140da337b2c48a4273479720b20a8ff1893829f67f8bff120d276921b"
+  },
+  {
+    "path": "real_video/dog_scene_experiment.py",
+    "sha256": "8d1c0ef050231c02352c8264ce0ba54c84ad8fc0b2f3234bd04d05a97688b51b"
+  },
+  {
+    "path": "real_video/edit_gaussian_memory.py",
+    "sha256": "d8dc4fde67f5f51bc2249c78eb7af1ed5e77cd5315eddc372e4b0a5ad557282f"
+  },
+  {
+    "path": "real_video/elevenlabs_client.py",
+    "sha256": "93b2e21a8a7ac6d16544573df9ddaf7343721bbc827ecf89a5297fa6d9de84e1"
+  },
+  {
+    "path": "real_video/elimination_scope.py",
+    "sha256": "cdbae6deb61452372f6a4ff11ac2761068e53014b7187c7e1b71bfbb2ac983da"
+  },
+  {
+    "path": "real_video/enclosing_scene.py",
+    "sha256": "644c80f8ac8f69f5a6ea227be1bedc386f643b39bdeb0e84c8a87d0fb62d0608"
+  },
+  {
+    "path": "real_video/evaluate.py",
+    "sha256": "e98623b8964f3eab2b25ca43caba1fd12556c5de0f5185ef5c592999bb373617"
+  },
+  {
+    "path": "real_video/evaluate_appearance3d.py",
+    "sha256": "7c58c55ff82e0f8ad9553f87220cc77a81e437acc2bd89b8e222b48e48169017"
+  },
+  {
+    "path": "real_video/evaluate_attached_vectors.py",
+    "sha256": "b1e1d11cac1960f628c0f0aa5c5fedef6531290410bd4d0755db276e8ab65e18"
+  },
+  {
+    "path": "real_video/evaluate_detail_profile.py",
+    "sha256": "b2a905218ef54bc8deaab134b073c2260be22dc0ffaee0c45e34f7f1acd83e09"
+  },
+  {
+    "path": "real_video/evaluate_residual_writer.py",
+    "sha256": "6c5eefeb8c1985dc75068687dafde41f26822662f2a0460366df44299c9943ec"
+  },
+  {
+    "path": "real_video/experiment_detail_lift.py",
+    "sha256": "e8a371cd653a35f66d9284c34371c1217563ea5f2701708243bfce4c3ca80298"
+  },
+  {
+    "path": "real_video/export_inspection_video.py",
+    "sha256": "1eb192a82dde2a93adff785fba3a74d06a39be2fbc03ff75ad3ebcfefff3963c"
+  },
+  {
+    "path": "real_video/export_neural_controller.py",
+    "sha256": "45a2c361093151efd8eca2ea91486fba214b0f440cfff6b562c6503fe4970e04"
+  },
+  {
+    "path": "real_video/export_orbit_viewer.py",
+    "sha256": "5b67b78a187686d7f9af0225f5416ba83db802f45da66cf6b9ba6fc8596e5a1f"
+  },
+  {
+    "path": "real_video/export_surface_motion.py",
+    "sha256": "47e14233b39854f595bfce80ef3e591602e442fd9bfa7d4a6abe352de365fffc"
+  },
+  {
+    "path": "real_video/export_weights.py",
+    "sha256": "f5217d130c69722df3388ecc4da66a1176a28e8392953b173030084f9d41cc76"
+  },
+  {
+    "path": "real_video/filter_animal_tracks.py",
+    "sha256": "63f21b0e5066a6b1ba8bb2bb9549702cd86c5d84486a33f9aef77855d885ce4e"
+  },
+  {
+    "path": "real_video/finalize_compute_pass.py",
+    "sha256": "d788504264fed93184933d389066042788ad9ad5fe25344fe8b0b607996ab940"
+  },
+  {
+    "path": "real_video/fit_appearance3d.py",
+    "sha256": "10836c4b482ef9af832136973472ccba63e794c3e72e5cc5a9277285aca5db85"
+  },
+  {
+    "path": "real_video/fit_articulated_weights.py",
+    "sha256": "1c431025a1e3bc171c52f2a2e27d9787a621b0066b516e1d09261dab4b09f629"
+  },
+  {
+    "path": "real_video/fit_motion3d.py",
+    "sha256": "6d9c2da05b64f079c18e0f5d23b45bc539273a54f86130d9e43d9886e412f691"
+  },
+  {
+    "path": "real_video/gaussian3d.py",
+    "sha256": "bd50f26d5e7d9ee0f3ad8dc1f61e2e7685ea380f74550739daa22a9b0df0cae8"
+  },
+  {
+    "path": "real_video/gaussian_agent_edits.py",
+    "sha256": "d760516379b65539c8ab21b34b2beab189c9006865995d148d0fe75bea2b32e5"
+  },
+  {
+    "path": "real_video/gaussian_asset_bank.py",
+    "sha256": "a30a7f7722b2f12a45b4c3bd243918d7e995c83a1ff7c07c34fc6637ade03ce5"
+  },
+  {
+    "path": "real_video/gaussian_edit_workers.py",
+    "sha256": "1709c66948d101930c34af3a1c8a6746e24f5faab98cd2f87d75143129208a2a"
+  },
+  {
+    "path": "real_video/gaussian_latent_memory.py",
+    "sha256": "bbb8ade987eee0c40a863e0bd718262c3f154dbdb5f84f5e228f7cc507091bc2"
+  },
+  {
+    "path": "real_video/gaussian_motion_memory.py",
+    "sha256": "cba125f78f7edb6c7982b50b6d5434398b54fe21323d69c642e0c6a76eebe9b7"
+  },
+  {
+    "path": "real_video/gaussian_object_agent.py",
+    "sha256": "aab213c13ebbbb49c95140b8e0aaee813e986686a9330d006a2e5d5831b257db"
+  },
+  {
+    "path": "real_video/gaussian_part_ownership.py",
+    "sha256": "be251671fae48fb99b980a838379eed9a20218fdac9b592e3799ed93cb89d19a"
+  },
+  {
+    "path": "real_video/gaussian_part_protocol.py",
+    "sha256": "2ab42782f4a9fb656e2472942ecf5e7fd6b28322cf4aeb8b95a3f01a2be4fc7d"
+  },
+  {
+    "path": "real_video/gaussian_program.py",
+    "sha256": "f08b1872c874689ded329cf22d50b86d3d899370496217ba11ffbe383484a5d5"
+  },
+  {
+    "path": "real_video/gaussian_scene_objects.py",
+    "sha256": "c17804d80309b14a49580f9dd1a4da81fc37637ab06795e1b8de2b520c44459f"
+  },
+  {
+    "path": "real_video/gaussian_video_memory.py",
+    "sha256": "39dad0cbb68a3b689dcad09b286e1dab3a7e07999e62dedefba5986b9fbcda05"
+  },
+  {
+    "path": "real_video/gemini_edit_planner.py",
+    "sha256": "f5ceb55c048b9a996d05abbe6248dbcce9d5ada54fa845a5e579e79f8511d8ca"
+  },
+  {
+    "path": "real_video/gemini_image_assets.py",
+    "sha256": "68db166489095bbcacd9bfa1f5363307023de46718781ae8a1e3e37ad90001d3"
+  },
+  {
+    "path": "real_video/gemini_settings.py",
+    "sha256": "42093c49c420f2f3a59ead1552b377a38d46db58ff567da8ee2655690873d810"
+  },
+  {
+    "path": "real_video/generate.py",
+    "sha256": "c9b33cd3b838f82435978f3ecd5320cad60f1f1279d8fce4060464d7a705903b"
+  },
+  {
+    "path": "real_video/generate_gaussian_actions.py",
+    "sha256": "ba8c4201611a594186fb308197a2675f1abd991dd53793891c8455c47c910e7f"
+  },
+  {
+    "path": "real_video/generate_wan_gaussian.py",
+    "sha256": "df06ee1dd0124ef2102be3af57a00f7287554dc5ee4a0bfddd290f25766189af"
+  },
+  {
+    "path": "real_video/generation_readiness.py",
+    "sha256": "912c0a367e26624a0d020df5ce8825ec5d5ba1195d88ab9e372357ef4f8cea71"
+  },
+  {
+    "path": "real_video/graph_sampling.py",
+    "sha256": "0eb8bb8a4686e84142957d8e5b391d1500cec5be6a3c9e02c7c24e57963b5c29"
+  },
+  {
+    "path": "real_video/guarded_worker.py",
+    "sha256": "d62fe6d5c1364ea75ac18ce64f0777766e4794a8d1ebc0d79af69ce48ae9111e"
+  },
+  {
+    "path": "real_video/hunyuan_appearance.py",
+    "sha256": "f5f28d327fa05d1b35cf5d12776e8633edbb5f3cc0d9f7cf3765bb02cefcae51"
+  },
+  {
+    "path": "real_video/hunyuan_gaussian.py",
+    "sha256": "0b82d3edbb04ec114b0563309beef54f8b5c3f49c84a69683cd9492041788003"
+  },
+  {
+    "path": "real_video/hunyuan_multiview.py",
+    "sha256": "8585328a4d31a5070bf500140e12b8951a52c2f0cadf092647dfed083a246c58"
+  },
+  {
+    "path": "real_video/identity_conditioning.py",
+    "sha256": "848db790cf7ad85d94daa6cdebf455d3340a62c1585da87aa5052fe10f006235"
+  },
+  {
+    "path": "real_video/infer_3d_cat.py",
+    "sha256": "5e5c608f810c29957c6ac378fff98f237fbdb2bfec2166d2ca4f4b49fb8bc7c7"
+  },
+  {
+    "path": "real_video/inference_precision.py",
+    "sha256": "0fc38b91c239c04e580039c70f53fb3315efa9b793b9e3b2719ac9307ab88645"
+  },
+  {
+    "path": "real_video/insert_gaussian_dog.py",
+    "sha256": "f6745a0afbaa58d857719205cf67354df4012885c9f369bc41cad99436e47fbf"
+  },
+  {
+    "path": "real_video/inspect_enclosing_scene.py",
+    "sha256": "d3e84e9b36f2ecb2060a0e123f90c3915cbd15f10b134b8dd5f428bd07769060"
+  },
+  {
+    "path": "real_video/inspect_runway_pilot.py",
+    "sha256": "4db8846615203e9d06817f60775aa2075f5a16d6afaa6cd64964a6979e5d9240"
+  },
+  {
+    "path": "real_video/instantmesh_adapter.py",
+    "sha256": "23f328a0c546815e44cace8e8d17949fadf5942e5ea960b46136e68ae450c107"
+  },
+  {
+    "path": "real_video/joint_acceleration.py",
+    "sha256": "9bc800c5942b14e5e50aa1caf6c03aa656a0f5da531eff004eb4927778147869"
+  },
+  {
+    "path": "real_video/keyframed_gaussian_motion.py",
+    "sha256": "ec6599cf51593f77871be0ca3eaf31160c497474941419bbc25f3677cbd242de"
+  },
+  {
+    "path": "real_video/latent.py",
+    "sha256": "13e97689f21aedfe0f960ce4a026dd069944a93d7b10f034aa39add70d06df2c"
+  },
+  {
+    "path": "real_video/latent_generate.py",
+    "sha256": "4c633872dbfa670b41c493fce10ebdf356f0c0c6772d98accdf1d6d0fb9a8d9d"
+  },
+  {
+    "path": "real_video/latent_track_memory.py",
+    "sha256": "098742c0beff2dc0d50db30f36d5cc8f9648f1bf6c5c8d2e96afaa26c415a00c"
+  },
+  {
+    "path": "real_video/learned_motion.py",
+    "sha256": "059989fa7761770c97be3e38a61a1e47cac59e3b036c0a921aa7737568256043"
+  },
+  {
+    "path": "real_video/local_object_repair.py",
+    "sha256": "7dab265a8701269367a5231eb3126eeaf45551de04742df34d47a4f4822a4530"
+  },
+  {
+    "path": "real_video/middle_surface.py",
+    "sha256": "2ef48ae18df5ea1d82bbaf64e1ac3a3f44c0edbc01b27d45dec489fd827c1e79"
+  },
+  {
+    "path": "real_video/model.py",
+    "sha256": "d27c59d8b2dc1861a9a1bdd89896624cf6d54f66b47f0d9906ee436cb76942eb"
+  },
+  {
+    "path": "real_video/motion_coherence.py",
+    "sha256": "790667ffd4ef45517933f5677b2cec64bfc739d917c6cdfa664ef686a76e624a"
+  },
+  {
+    "path": "real_video/motion_model_io.py",
+    "sha256": "0a2d71d1853423f13c1cff052ebcc07e09c0771e2fc5166fa72ce2d554ead9fd"
+  },
+  {
+    "path": "real_video/motion_only_session.py",
+    "sha256": "02f80c047379967095fd0d97d436564caa2b64fe6b10c7953bed2eaa9bd17e1a"
+  },
+  {
+    "path": "real_video/objectives.py",
+    "sha256": "349f00df52188952ea67f82b54a06c131ffadbc5098471cdc6e7f42f53e6f07e"
+  },
+  {
+    "path": "real_video/observed_part_placement.py",
+    "sha256": "8d9d88d97d5f9becc30e0019196d32c295cdf8949d4a3a2db849004df5055796"
+  },
+  {
+    "path": "real_video/original_cat_motion.py",
+    "sha256": "a327eb53416e037f55767a192ab33ec6a8bfd5be7f224a692e48172dd3b8a1e7"
+  },
+  {
+    "path": "real_video/persistent_gaussian.py",
+    "sha256": "cbd1f9f3a449429d8cbaae88d1265d5430eb4d4aaf7b7706739f35ee86d743dd"
+  },
+  {
+    "path": "real_video/prepare.py",
+    "sha256": "18ab628c380460f164d81818ee468269df26963f6ae723bb8a9adb9a4ff10c56"
+  },
+  {
+    "path": "real_video/prepare_animal_motion.py",
+    "sha256": "eb9e6c5dea66884679e691daaf63b2827f3ec72d7c6fa8cc349b5fc8a20e8490"
+  },
+  {
+    "path": "real_video/prepare_wan22.py",
+    "sha256": "d8208ba6b2f7dc1f382eeb14c79819f24f7b813b9c204398e185572b74f73c08"
+  },
+  {
+    "path": "real_video/prepare_windows.py",
+    "sha256": "fd4ec74d9d62d055a25fc5a41e83ee7634b1095d140c59812c837c5a4982ab65"
+  },
+  {
+    "path": "real_video/prompt_gaussian_video.py",
+    "sha256": "f7e6b21dc728a56ad7c5b3dd65e7c056323885113792f92b0e3814ffab51744b"
+  },
+  {
+    "path": "real_video/quadruped_controller.py",
+    "sha256": "84be52a0425b58d5e8f20b650ea7052da5fc8cee6a404e44c6960808f9a7a958"
+  },
+  {
+    "path": "real_video/record_acceleration_review.py",
+    "sha256": "f421a897a87d88a238683bfb0c7913d29f9a0d9123c16756180abd9e26e6fd6b"
+  },
+  {
+    "path": "real_video/record_articulation_review.py",
+    "sha256": "e410e03b180c739acfc1fbbf4fa37642986096f6cf771b27f61e9d115205ef7c"
+  },
+  {
+    "path": "real_video/record_background_review.py",
+    "sha256": "ff968a8ab701228116a23d83bad9cb62fe7550313aa823f57729a17b7e41fe56"
+  },
+  {
+    "path": "real_video/record_detail_lift_review.py",
+    "sha256": "0c18d67b1a14bb13678b7324998388fc109959e674ae00dba393c0240d8a6098"
+  },
+  {
+    "path": "real_video/record_enclosing_review.py",
+    "sha256": "5a392f16e12c07de507f0f7c381b3180f4bcf62314d89b6c9a33beede4384d2e"
+  },
+  {
+    "path": "real_video/record_hunyuan_review.py",
+    "sha256": "91213f81665c64694d40242cf959e930d00e32cbcc2bf8763a60776b4c979423"
+  },
+  {
+    "path": "real_video/record_prompt_generation_review.py",
+    "sha256": "6841d58837fa16a19fade2ed9bcfef3903926fbcfab92e5d092958a15030ab86"
+  },
+  {
+    "path": "real_video/region_detail.py",
+    "sha256": "e6853de3aa7aa7349fd16361cf23fe6602afa6ebec886a07630b356904c2f3dc"
+  },
+  {
+    "path": "real_video/repair_cat_surface.py",
+    "sha256": "f310fe6103a0d87e2d6297e70d98b433d8642a63d496116acc38afe193d228b1"
+  },
+  {
+    "path": "real_video/repeat_temporal_dog.py",
+    "sha256": "d146d10392d3346bbb7f18fa19e6ccb159d940eb7aeffd694142980785f3b94f"
+  },
+  {
+    "path": "real_video/replay_fit.py",
+    "sha256": "57164348fa422238dc2caf96226df50faa34d681b6b099bc19134d49f0bcc733"
+  },
+  {
+    "path": "real_video/representation.py",
+    "sha256": "789b992a90698af0578f720011ca59037d7b294393e356c6e618d72fce6a68d3"
+  },
+  {
+    "path": "real_video/residual_gaussian_writer.py",
+    "sha256": "633625aff5661015d20bee5c6560c1536e06a719694151dd1d73e3570b7aea5b"
+  },
+  {
+    "path": "real_video/resumable_model_download.py",
+    "sha256": "0c06ea66dc370ee600a047382367ef07431c69cb9c01c0ac345245f868a38b32"
+  },
+  {
+    "path": "real_video/resume_attached_vectors.py",
+    "sha256": "d8d66125881bfba282208443a96d668809f2c22c90e6657ce21570ffa155eb94"
+  },
+  {
+    "path": "real_video/resume_wan.py",
+    "sha256": "5a508c62acf25cccb9a933232afb24eb509e7c1e3eda4fd904512e2057086086"
+  },
+  {
+    "path": "real_video/retain_coherent_motion.py",
+    "sha256": "be70b865a474e19e1fb5e77947c9cf6705d34336ce3f336b6b8aaf85b39b2793"
+  },
+  {
+    "path": "real_video/review_detail_ablation.py",
+    "sha256": "d92f99cfab554f2284aa28fb2ab15ee72a9e35b1e145107abd7c1860a100ad3d"
+  },
+  {
+    "path": "real_video/review_dog_scene_comparison.py",
+    "sha256": "26de4cec88ad48996724e74f65b5ff34870e3dd5aa88566d2da327e8a2451de9"
+  },
+  {
+    "path": "real_video/review_gaussian_actions.py",
+    "sha256": "667cd0cb215ff733fd5dc61444d21326a2e97d30537706fdab987d5dfc74a022"
+  },
+  {
+    "path": "real_video/review_gaussian_temporal_memory.py",
+    "sha256": "709569e425dd579c07962a7e5a127222f346846c23fe1ba53f90f54c0c0f6235"
+  },
+  {
+    "path": "real_video/review_instantmesh.py",
+    "sha256": "31894f603740f26f07cf0b064e285b71e08e195b48f72bf1a06e7ff00899cd03"
+  },
+  {
+    "path": "real_video/review_latent_appearance.py",
+    "sha256": "7c7e3efd370cff4b32a0084476c1cfbf63edad2aaf8b1edaa58cc8fd26c37f2f"
+  },
+  {
+    "path": "real_video/review_middle_guard.py",
+    "sha256": "7b27b015b9b1ed7d538f2329c7c783665ae49839a31d29645605b77b2d65d91a"
+  },
+  {
+    "path": "real_video/review_middle_surface.py",
+    "sha256": "f551165bf32031ac063dfaaaede6a295d58af2d0dacffc0386c699b5cd58eef1"
+  },
+  {
+    "path": "real_video/review_multiview_candidate.py",
+    "sha256": "f1749a757087f8cb568fc199d9893f817c79a70c2b25b3c28ba7d256a5c42ba6"
+  },
+  {
+    "path": "real_video/review_neural_controller.py",
+    "sha256": "09acd279756f68ee377aa6e17653b35d34b13c9a8389a2141ae8d043a0b61c5b"
+  },
+  {
+    "path": "real_video/review_original_motion.py",
+    "sha256": "60e3be994c9e699ac295f46978cbbb34f6099cb1db136241ce70b93a0e5c4873"
+  },
+  {
+    "path": "real_video/review_region_experiment.py",
+    "sha256": "aa994c1f5931c5c562c4293ca45e06097ffe1f43d58724494e8b600e0d5b75a8"
+  },
+  {
+    "path": "real_video/review_spatial_gaussian.py",
+    "sha256": "7f612bf39b8b547a790b3c26203b5846319627b2deb1e43c790ad67f1a1ab987"
+  },
+  {
+    "path": "real_video/review_temporal_wan.py",
+    "sha256": "26db6050b7e948796b001cdb9b7738ef978c3ea16292442e2cd112ad53aed856"
+  },
+  {
+    "path": "real_video/review_wan_cat_memory.py",
+    "sha256": "144b0315e5eac27abe20246c072abd2645ae7c57b6c38b1152ce35dca5a97013"
+  },
+  {
+    "path": "real_video/review_wan_cat_memory_full.py",
+    "sha256": "8f54b39a64ece189d2281c05217bbc56a83b6681d994cce7effe8565c7cac4be"
+  },
+  {
+    "path": "real_video/review_weld_band.py",
+    "sha256": "9ab9c223021818f7151252cf8fad5939743ac48f132e5b83d0d6ce8e03a0faa6"
+  },
+  {
+    "path": "real_video/runway_bootstrap.py",
+    "sha256": "1ce765dc3e45ab9f2a7ec2f40667338a3e6e1621d4a2e0db58407661db98ee22"
+  },
+  {
+    "path": "real_video/runway_pilot.py",
+    "sha256": "51a15f9483038135d605fd5f961cab53f2da9fe24b459389fbb91d8734810647"
+  },
+  {
+    "path": "real_video/runway_settings.py",
+    "sha256": "adf047433c47fe1a96828276358b2735192635989c65292e2f38b3567b6c3ed9"
+  },
+  {
+    "path": "real_video/sample_gaussian_temporal_memory.py",
+    "sha256": "bafc3f75425b41635ef968f11a96e0be88b9b19ac545948320e32f2b5cdde333"
+  },
+  {
+    "path": "real_video/sample_spatial_gaussian.py",
+    "sha256": "a118c4afd79f07063edfa19b92662be79e4d31d3a1030fcd4321b833680d7a86"
+  },
+  {
+    "path": "real_video/sample_wan22_memory.py",
+    "sha256": "aba4cdecb88f0d2e63035752d0e8790a43092cc0b16e70139a30357b7795d9e9"
+  },
+  {
+    "path": "real_video/sample_wan_cat_memory.py",
+    "sha256": "4a9025d0259d78783573051d9e11e78269eb6202d0fa306512514a26b471a7ba"
+  },
+  {
+    "path": "real_video/scaling_sweep.py",
+    "sha256": "7e9b0bfec31fe9959be632c7925adbae4e029eae058926cbf8524d6430d0dfad"
+  },
+  {
+    "path": "real_video/session.py",
+    "sha256": "c325cba54d9ef32ab3bb8296e04f3c6224f071fb35a7a439208c8eb6f2fd79a5"
+  },
+  {
+    "path": "real_video/studio_agent_events.py",
+    "sha256": "257ba1f554ce1ea424df69ec7669ad043108fc347863ceca3229f01554d9464d"
+  },
+  {
+    "path": "real_video/studio_agent_tasks.py",
+    "sha256": "03e99c21c6df399e99130bce6ba241b59719ee95a4d68ffdfc9d71e024741d75"
+  },
+  {
+    "path": "real_video/studio_assets.py",
+    "sha256": "08a8c76e9a50237afb9a0ceb1126101ad5afd775c9da91e6d5921dc2aab4a0d3"
+  },
+  {
+    "path": "real_video/studio_audio_mix.py",
+    "sha256": "cde9fd46cfa97338ff375ed821df8fff8a3f840bf8c493f4a5651cfa860c3d6e"
+  },
+  {
+    "path": "real_video/studio_backend.py",
+    "sha256": "2cd14180bb95233ee049c56cb42ecced8449b5af6a6ac7ef965282019ce18466"
+  },
+  {
+    "path": "real_video/studio_planner.py",
+    "sha256": "d4ededea759ff79eff2d06e09c4ebf7ae199805043f66513c01e6b3ca51902a5"
+  },
+  {
+    "path": "real_video/studio_remote_edits.py",
+    "sha256": "85937cbceba2b37f97ee61ed1ac4838bd80628328eceb30e4249e0e836bfe3b5"
+  },
+  {
+    "path": "real_video/studio_roles.py",
+    "sha256": "bc683c32e1fb5fbd88b22eb9ee12c415be208b1dcf7e771dc656db64d6335953"
+  },
+  {
+    "path": "real_video/studio_swarm.py",
+    "sha256": "8aece3f61faf2492cfb44162055f95c41b3c6c0361b720efd416c1ef494bb8c0"
+  },
+  {
+    "path": "real_video/summarize_compute_learning.py",
+    "sha256": "8592583dc9c5eeb7b5bedd94ad040eda7ef470287788a1464b2916027c96601f"
+  },
+  {
+    "path": "real_video/summarize_latent_appearance.py",
+    "sha256": "806d669b3a3898fd6e5f0c1c675d4795df7aff8ee68961b40ddb0940775be930"
+  },
+  {
+    "path": "real_video/summarize_scaling.py",
+    "sha256": "7fef3f6fef9bebbfbd180953acf1a46ecf5a3cd6e76328af3bb304b1cd1bc292"
+  },
+  {
+    "path": "real_video/summarize_vector_loop.py",
+    "sha256": "e53017d9cdf5b6ab62cebc472575601cd14b90a4935cbca3009afca7f0f58113"
+  },
+  {
+    "path": "real_video/surface_skin3d.py",
+    "sha256": "9928c73dc8f563d05ea4b7ff076de6b24e52fba1a74a6a329b160f164dd1cf7e"
+  },
+  {
+    "path": "real_video/temporal_motion_audit.py",
+    "sha256": "9e87c768a314215c04f7865c7f6919140c7f16aebc3b4ffd914fee8289473e37"
+  },
+  {
+    "path": "real_video/texture_restore.py",
+    "sha256": "6c6f4fc2fb7bd9ef0d338fa1785b181d647027705e00b2bca7d1e5371fbe4ccb"
+  },
+  {
+    "path": "real_video/train.py",
+    "sha256": "f4df1e7343c4b45e974f23f149f237134e5aff36c2fa7dfa000198abbce8a315"
+  },
+  {
+    "path": "real_video/train_acceleration_ablation.py",
+    "sha256": "f49281f33ab43947aacea7c917772ec200172c3c0c684c77b74530fe9040a42c"
+  },
+  {
+    "path": "real_video/train_animal_graph.py",
+    "sha256": "b124d9c3dc4bdd9a339cb8d10d4fd157dac33dfb7b261486070a1f586ff5fbb2"
+  },
+  {
+    "path": "real_video/train_animal_visual.py",
+    "sha256": "e18a4b8fe5f32433b5eaab1238cd643ce00c988c054cefc28468544dd28f8a53"
+  },
+  {
+    "path": "real_video/train_coherent_motion.py",
+    "sha256": "e6b6cfb71dc72c60b15720d75aa3a0d4dc5eb077733f87f16d80bab68e52dfe8"
+  },
+  {
+    "path": "real_video/train_joint_acceleration.py",
+    "sha256": "a7aaa3623eb3eaf60fc6260275ef16d313edca6f48953c8783eca755c078f5fb"
+  },
+  {
+    "path": "real_video/train_latent.py",
+    "sha256": "9ea7e6d11e0c709a3d8cca5e0262e438e41d5fbf9283416e8ce3920f7a75f0c7"
+  },
+  {
+    "path": "real_video/train_latent_appearance.py",
+    "sha256": "cbd0f65ef649860063c2f18c2ff04e8b1b7774a4c123a89afba5f50244fd221d"
+  },
+  {
+    "path": "real_video/train_learned_motion.py",
+    "sha256": "68b204c2853ebeffcf4c36a83b75c26fbc093b32f7c29955854401a769a8731e"
+  },
+  {
+    "path": "real_video/train_persistent_gaussian.py",
+    "sha256": "d5ad7adcf1fe24ee300d135bbe37e2d2cc1d3dd6b47b6e8d7c9fb141a50d06ac"
+  },
+  {
+    "path": "real_video/train_temporal_wan.py",
+    "sha256": "810f5c1497d9d5c1e87243ec87359157dbe8e2e0277e265a9ffe3e2f3e340f87"
+  },
+  {
+    "path": "real_video/train_vector_motion_aligned.py",
+    "sha256": "14495cea9adae4e134f06f1d8df52f6c1a3df798146ec5a0a1f6a613e2272f21"
+  },
+  {
+    "path": "real_video/train_vector_motion_loop.py",
+    "sha256": "44591ee326d4b146ad5ef192149161c6d37c13cfb825436ce00e49bfab3c5ff7"
+  },
+  {
+    "path": "real_video/train_vector_motion_residual.py",
+    "sha256": "f58aede9c059bb53b52d6cf68a4ee3761820ee01f92d12bce3b173d44e4f9ad5"
+  },
+  {
+    "path": "real_video/train_wan_bridge.py",
+    "sha256": "25a2fa63ee345bfa08544341bed7dc989648fd1cfc6fbd9f605ac07f6f7e094d"
+  },
+  {
+    "path": "real_video/vector_closeup.py",
+    "sha256": "a1747839d251de2a4502a9c427d861d64bbd4f254e901c228440384f6d0af121"
+  },
+  {
+    "path": "real_video/vector_motion_acceleration.py",
+    "sha256": "492ec7c09318f0218fcf4eb1beea571b8494e11531afc912a2a7ad1aa6e28b56"
+  },
+  {
+    "path": "real_video/vector_motion_network.py",
+    "sha256": "f97096739d40a4c78d2c5529a36f0b2eb3c7f73cb5bb3edaaf0fbb407d941142"
+  },
+  {
+    "path": "real_video/vector_motion_residual.py",
+    "sha256": "e5f823da676cd7ca6a6b73b278a838b9c3b8179c503ecfc80e1158a52385de4a"
+  },
+  {
+    "path": "real_video/vector_recording.py",
+    "sha256": "1571ccbee68ba19e108ae4daa92d28916f3d43a374e278d1a49ba85942b6011b"
+  },
+  {
+    "path": "real_video/verify_data.py",
+    "sha256": "dccd066b597513ad943bededf07e3250700826a1bdd721fbf7e0d8711e050af7"
+  },
+  {
+    "path": "real_video/wan22_gaussian_anchor.py",
+    "sha256": "98913c56484b61790f96461cbc6996ca8e787c7098ce051d50c9aaf37ff5252b"
+  },
+  {
+    "path": "real_video/wan_baseline.py",
+    "sha256": "f5e4736453169bfe738a6a5cc92449abdacd38027700dd9d1c3589536572a442"
+  },
+  {
+    "path": "real_video/wan_cat_memory.py",
+    "sha256": "3ace2a294c14ee9bc3adf342ea96218596c8a01ef7113352bb8b4fb0f5dd6638"
+  },
+  {
+    "path": "real_video/wan_gaussian.py",
+    "sha256": "02c0ff68f908db00398454f3ab74882ce24a08e3b4f0f94f7fc68e4248974717"
+  },
+  {
+    "path": "real_video/wan_latent_appearance.py",
+    "sha256": "005172d16721787240e021dabc76e29833d23f6137ca6e3b203baac6f8387ec4"
+  },
+  {
+    "path": "real_video/wan_part_control.py",
+    "sha256": "cb7aaaa7b41677bd77e09be6c67caf918c53b3ad06ebafe00628f6271f7f23f7"
+  },
+  {
+    "path": "real_video/wan_spatial_gaussian.py",
+    "sha256": "7c0c0d342a2be0a386c3af673f4c6026fc5a1d2013406ad2c0c71f1dd76326be"
+  },
+  {
+    "path": "real_video/wan_temporal_control.py",
+    "sha256": "b842cff72d60fae107dc411ca861453a5ab7f37f0be97980a8ad5150de22f5f9"
+  },
+  {
+    "path": "real_video/watch_wan_memory.py",
+    "sha256": "6e40468eff03c737be5027eb1cc1445b6e3642b02c77baa0c5cbe41281cfc7e1"
+  },
+  {
+    "path": "real_video/weld_band.py",
+    "sha256": "ee99565b6d3f2c6c08d97188866f6eadba04e3d8d3e346e0015e7b06e291b131"
+  },
+  {
+    "path": "real_video/zero123_views.py",
+    "sha256": "d653b6fecddecf3a9d7338b44d4c85a00ad665aeae6f980cb52f8764d9b5d953"
+  },
+  {
+    "path": "cloud/a14b_preflight.py",
+    "sha256": "29026c6e4614b19d07eba0d52e4ca9f1f61fdf121f005b061689c3a51c81a173"
+  },
+  {
+    "path": "cloud/a14b_remote_job.py",
+    "sha256": "084282107e0e987a0718a4cbae5589aa08cb101e4f33641892410134f72a4680"
+  },
+  {
+    "path": "cloud/agentvideo_decision_trial.py",
+    "sha256": "5f7673a4c78283dac83023bbf0b71b061c0639c7558f5fe7fdeb28bbbfaa36b1"
+  },
+  {
+    "path": "cloud/agentvideo_provider_trial.py",
+    "sha256": "536b439acfcfd67c00306bbd355c5711ce54208cf957cbcd4bbd9435910b1856"
+  },
+  {
+    "path": "cloud/build_a14b_bundle.py",
+    "sha256": "f1fbb9ff2f5d9a49d038fe3d12a490aebe7c92df065dc7bccd98515a0505c685"
+  },
+  {
+    "path": "cloud/build_a14b_eval_bundle.py",
+    "sha256": "8ac2472914f4d12d0be18d0cd1eaa7b137575ff025fa2bdbe9e57cf14fd46cc4"
+  },
+  {
+    "path": "cloud/chunk_transfer.py",
+    "sha256": "697df220243c2c6ce0c5e74de993f760ccd5b6ecf8ebbe2e90a85c3507dd42aa"
+  },
+  {
+    "path": "cloud/deploy_eval_cache_repair.py",
+    "sha256": "091930240d69ee95a2c7b8a529bf6524c81f353a31dfc2b0660930efe4b93b39"
+  },
+  {
+    "path": "cloud/diagnose_runpod_access.py",
+    "sha256": "a373b8dc5e2ce6db09b8e326b4f703da2b914f6442e8d69570a61a74dae4e67a"
+  },
+  {
+    "path": "cloud/download_a14b.py",
+    "sha256": "f21a09a9921805180d829d60f7277b18e2f24052c1d5de080ba52062911f4439"
+  },
+  {
+    "path": "cloud/eval_preflight.py",
+    "sha256": "578ee85a092408c5bd0cafbacaa745f41d94bfea26e8653855f9884f9e13cc81"
+  },
+  {
+    "path": "cloud/evaluate_a14b.py",
+    "sha256": "6cdf11a6cf53adb9b72c523b51e3e95546b2ee048ba7af22e05aa71a8faf1939"
+  },
+  {
+    "path": "cloud/finalize_agentvideo_provider_fix.py",
+    "sha256": "93b185cb705071bc219154a13bbe940a170513772b48421150add8f220296fe2"
+  },
+  {
+    "path": "cloud/finalize_object_review.py",
+    "sha256": "780b923a441c505525f55c5c802775591791fc1e16a9f319c982996adcecfbde"
+  },
+  {
+    "path": "cloud/gemini_review_once.py",
+    "sha256": "e00bbafc47d13e6335290669cc962da4c0d3b5a81cf047672ee0a57108ab474c"
+  },
+  {
+    "path": "cloud/inspect_remote_guard.py",
+    "sha256": "6cf91b5b552845d347ba88f2d43cedaba8d995911379b553c9fa851e6f57004b"
+  },
+  {
+    "path": "cloud/jupyter_transfer.py",
+    "sha256": "a65e7d0e0a942ec912256878f08e53d2092f0560d569e53b428b2c8e28104b44"
+  },
+  {
+    "path": "cloud/model_cache_release.py",
+    "sha256": "04929dc4d779ba1a6696a8f1891d5d67c2debd5ace9c2178dc988e188e998c0e"
+  },
+  {
+    "path": "cloud/object_edit_semantic_worker.py",
+    "sha256": "431a18e9f16b5218ab8c07d470165e9436b25b22dcd56c9e9d1e8ef419398683"
+  },
+  {
+    "path": "cloud/object_edit_tracked_worker.py",
+    "sha256": "b48256dc1d2ef578c071b95a5da86bf3a7d9b1213ade7f5587373d0393f5f71d"
+  },
+  {
+    "path": "cloud/object_edit_worker.py",
+    "sha256": "2bdbc99f306ec6a53186472f79c36624d5a12c54600e33b57ce7a27827e4de82"
+  },
+  {
+    "path": "cloud/record_a14b_ablation_review.py",
+    "sha256": "f072c74076ac024f4d8c8c19eae0ae09fbfa1cfd2890f2ed46c94087bc6d9adc"
+  },
+  {
+    "path": "cloud/record_a14b_review.py",
+    "sha256": "9a40c8902991a0af0a08e5b433d20bd36c1b1263d139b0b0402aac39d560213a"
+  },
+  {
+    "path": "cloud/record_apple_repair.py",
+    "sha256": "2eb8ad01f192dea479e1881fd92685edc94c529f8aca0c1b062b0c0a767fd73a"
+  },
+  {
+    "path": "cloud/record_eval_failure.py",
+    "sha256": "05b7cf115e00c9e5dd18ce4189c5b962a8d0d0b31f784ac13001ed0b9bebd983"
+  },
+  {
+    "path": "cloud/record_eval_safety_repair.py",
+    "sha256": "4a9e9776315e792c6a2254400c7b8a2c8e2560a8390d61b1579823ef0f781bd3"
+  },
+  {
+    "path": "cloud/record_part_agent_trial.py",
+    "sha256": "7c3b9896dc86cb2a20ceef73e1fa49b3eda7e0ff670b72f51a0ec57566d7f4aa"
+  },
+  {
+    "path": "cloud/record_preflight_heartbeat.py",
+    "sha256": "a14a0e66722d3c770ae1f38e1431cbe51af95b98a2724917ad62bf6f069c71ba"
+  },
+  {
+    "path": "cloud/record_semantic_recovery.py",
+    "sha256": "478174232d292e40e2cf830f61e848c6a4905b63e49ecb757d8009e2a304b446"
+  },
+  {
+    "path": "cloud/record_semantic_start_failure.py",
+    "sha256": "12de7f4b534ca48eaec1da186181953009ed7ae1af052b9a0a36305911f5f543"
+  },
+  {
+    "path": "cloud/resume_remote_evaluation.py",
+    "sha256": "ed124805d59fc8d71dfae5554dfe8878b9f6a9b2818c7991c7a4a3d958c5b36c"
+  },
+  {
+    "path": "cloud/review_a14b_ablation.py",
+    "sha256": "f2c29cc0acb561f851a357a16208cc1becf8dd644a81398b93bfecfb4d6fe195"
+  },
+  {
+    "path": "cloud/review_a14b_media.py",
+    "sha256": "8d3839bf4620728cd987fe05780b27c299df20315782a34d3f94d88f98fb1fdb"
+  },
+  {
+    "path": "cloud/run_object_edit.py",
+    "sha256": "fff54acebfd1ae3f0eae2fd19b8d48809c8bfbe6a6e4cf1da5d38e10517836f9"
+  },
+  {
+    "path": "cloud/run_remote_evaluation.py",
+    "sha256": "0692c4d6ccfb6cb9dbd35e2c658e0b05dac2a27009c2c9285396bd7c32f2f840"
+  },
+  {
+    "path": "cloud/run_semantic_alternative.py",
+    "sha256": "ff0147deaa4e662d41a56945b63207e071f2ae911ad6ade8869de8bd84b8d731"
+  },
+  {
+    "path": "cloud/run_semantic_edit.py",
+    "sha256": "957d719329ce930a17ca21ea58c579559ce95bccc965a08d7fb59a4401bf7c49"
+  },
+  {
+    "path": "cloud/run_semantic_fresh.py",
+    "sha256": "c81d8c2e94c5d00e2a765cf8749ed08be1c8e98558629134df00658338f8360e"
+  },
+  {
+    "path": "cloud/run_studio_apple.py",
+    "sha256": "6f804ca8c9b7d9bc66b2967e53dc54bb8fbed60cbf29dcf82ca2e99f9eb0411f"
+  },
+  {
+    "path": "cloud/runpod_boot_guard.py",
+    "sha256": "0b195defd4a55d630a4c9ceb7e82fc7b51e6dfbf047e2f58855d0e2553f038c4"
+  },
+  {
+    "path": "cloud/runpod_client.py",
+    "sha256": "c9b38b7ae857d29de402b25783c80a913928e186bfdbfade7f6c64df2fa4fb14"
+  },
+  {
+    "path": "cloud/runpod_control.py",
+    "sha256": "35f1faa57cbc1740ae5136253b186b6d1ba023558f858300e77c3ab5d8685cd9"
+  },
+  {
+    "path": "cloud/runpod_guarded_session.py",
+    "sha256": "657fdd1e90927bb4816ae2efe0805c894ff7d02b2003253c876b8e7860d42db6"
+  },
+  {
+    "path": "cloud/runpod_job.py",
+    "sha256": "718136d79a57c5fc819f8d29c95372e994c21a7f58f5586ff942b85a8372b20c"
+  },
+  {
+    "path": "cloud/studio_gaussian_worker.py",
+    "sha256": "4ae20ba27e34ffc544c668607ce37b79fbac76d7f8484c495a00ac42ced52b1f"
+  },
+  {
+    "path": "cloud/supervise_a14b.py",
+    "sha256": "4aee20fd93a4b035033d68af3a8c005f08ffee5c8fe051a7def39bf112ce2786"
+  },
+  {
+    "path": "cloud/validate_studio_agents.py",
+    "sha256": "88c4ea9f25f724cc3bed0633f2e2571976473d65c7f1d9d8811a661fbf01aa0f"
+  },
+  {
+    "path": "cloud/wan_a14b_experiment.py",
+    "sha256": "56140e863a3ad2eaf55324632ef5fcdb29c6b58206d9194d796f97eb9679ff0d"
+  },
+  {
+    "path": "gv/__init__.py",
+    "sha256": "c3bf6fb610780a73465f88933ab115feb9a9dede36b87a5a6a826d78e4244cf6"
+  },
+  {
+    "path": "gv/codec.py",
+    "sha256": "349449b38650e48f71c529af2214eb9e08feec502868776a65b0a340bd52bd79"
+  },
+  {
+    "path": "gv/data.py",
+    "sha256": "c81ed29f84b896543c24450cd335b239bf68ad76a17f4b5d552b126944f69e01"
+  },
+  {
+    "path": "gv/geometry.py",
+    "sha256": "7156802ed38c71dba92d96093b46354c34a4eb438bba0ed7ea63582e0240645e"
+  },
+  {
+    "path": "gv/model.py",
+    "sha256": "17563f7e421218e0bd5f382b720c60695c1d563253051d41c4f28502032561f0"
+  },
+  {
+    "path": "gv/render.py",
+    "sha256": "31ce66d56af77d9ef30c609cfd03ccf56d82d11949bc70899ab7896ec0402f2e"
+  },
+  {
+    "path": "tests/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "tests/test_a14b_preflight.py",
+    "sha256": "3d8966412d5a43c3416e0fc40a01cfcf32b29b6ab9c854dbc768350130c90843"
+  },
+  {
+    "path": "tests/test_adaptive_gaussian_renderer.py",
+    "sha256": "e64e72be13cd51b4496d84147453e33f3cafe55be7e8d413008324f082ea0dfa"
+  },
+  {
+    "path": "tests/test_agentvideo_decision_stage.py",
+    "sha256": "b7c510cac9d62c0b41609b5563360a48f71148ec7205b3a035647c00261a99fd"
+  },
+  {
+    "path": "tests/test_agentvideo_gemini.py",
+    "sha256": "009d72be2138a9f548e3ffba32ca469aef9a6dd81df0723bd7cd4e99778c73ef"
+  },
+  {
+    "path": "tests/test_agentvideo_parts.py",
+    "sha256": "96dd3c62a29ffab892447da904f0ca5ee09fe91799ac0e32c5c3e7a32912ac07"
+  },
+  {
+    "path": "tests/test_animal_control_graph.py",
+    "sha256": "b9db8ee3a2aac8b74e773e8b9b5cb04b4e0822b45b741f55dddb53e77f933797"
+  },
+  {
+    "path": "tests/test_animal_visual.py",
+    "sha256": "9ce5c743ef35113c7451fa682b62cb8734d825397a0b23ceb136dd5c4471bd67"
+  },
+  {
+    "path": "tests/test_articulated_gaussian.py",
+    "sha256": "cf95eff53a00885c932646207050efd2d897c7ad9f259cc4353a7dbb694cc71c"
+  },
+  {
+    "path": "tests/test_articulation_quality.py",
+    "sha256": "42257ee43711892b0d77104a7e1ef342e042a938259fb705ff05d99d0b9b03d8"
+  },
+  {
+    "path": "tests/test_asset_readiness.py",
+    "sha256": "8363d3c0ad89bc76c551346ed080ba9f9c64e30edc7838e19d432c0048b9644a"
+  },
+  {
+    "path": "tests/test_background_completion.py",
+    "sha256": "f954ee181ffa8d6be750fdcb7a46e34d2b203c875257a88deb1742951d3ea7b8"
+  },
+  {
+    "path": "tests/test_checkpoint_io.py",
+    "sha256": "8eef9261019e11aeef7898175952e786f6e746e63642f58299d09173a9117759"
+  },
+  {
+    "path": "tests/test_chunk_transfer.py",
+    "sha256": "edd1da00e8f73df8afcfbca31e6dcf1f51a418d86b2f9cdc1538448f40507e55"
+  },
+  {
+    "path": "tests/test_codec.py",
+    "sha256": "b63a77058f34a177f82d331c489385b097dae4d90aafe6fe5bc2cfdcf1e151ae"
+  },
+  {
+    "path": "tests/test_connected_gaussian.py",
+    "sha256": "c01b8276f94d840f50c4318b14aa9a1e86b309ba44f51572edbe8a67d93b53b5"
+  },
+  {
+    "path": "tests/test_controller_rig.py",
+    "sha256": "4207cf2f2c35661b82ef236f4c215aac4ba673a29f259da383a97096cd131b1d"
+  },
+  {
+    "path": "tests/test_core.py",
+    "sha256": "f4d3f7d4a501a2060514b41f47d384f5e7a94b2d55265ae42d6cbb644929d723"
+  },
+  {
+    "path": "tests/test_dense_surface_fit.py",
+    "sha256": "2840ee3906d28737f5fb5bcc11bfc00f47795c3122597094b5ae8baa66a56ce1"
+  },
+  {
+    "path": "tests/test_detail_lift.py",
+    "sha256": "bda9ae5f871bbcb066294870bdc60737c636456f08ae512baede7d63bd75e296"
+  },
+  {
+    "path": "tests/test_diagnose_wan22_decode.py",
+    "sha256": "a7ebe82f0b088867f0d3e95dbe810adda817bf03301aaa37b4f57ce7b0dad98c"
+  },
+  {
+    "path": "tests/test_distillation.py",
+    "sha256": "2c69d2759ee675d33cf2681c7a82e929bd9db3e4a02b0ca8a3498b82ccc039da"
+  },
+  {
+    "path": "tests/test_dog_articulation.py",
+    "sha256": "9fed317b24a1ab0c0639172afa563409a16b81e06b659fc49ab7f4385478ee86"
+  },
+  {
+    "path": "tests/test_dog_scene_comparison.py",
+    "sha256": "9935758b51a167f648a766294cc59443d79240cbc09a36b28892e4a23e955a06"
+  },
+  {
+    "path": "tests/test_elevenlabs_client.py",
+    "sha256": "fdf3b91a4e13b4c4d97703c211d5feae2ca77e39a59c63b210913fab263d5bef"
+  },
+  {
+    "path": "tests/test_elevenlabs_settings.py",
+    "sha256": "8f7d158eb1c84de540609a5ff1835ed494cdc70c4c3bcbf84a6aa47359d69ef2"
+  },
+  {
+    "path": "tests/test_elimination_scope.py",
+    "sha256": "243c2a2a0ea09623d7c773ae8e964c98bf515b01112a9de54ed35aab32a34445"
+  },
+  {
+    "path": "tests/test_enclosing_scene.py",
+    "sha256": "1c7feac0d18f96c20d927a8ffdc88a62d121c664d31304a84547db99b277276b"
+  },
+  {
+    "path": "tests/test_eval_preflight.py",
+    "sha256": "0078b69fdba2b9c608775b4512ecde8b7840abebb2131554a0e2be215e96bb58"
+  },
+  {
+    "path": "tests/test_external.py",
+    "sha256": "6323982d5730358a024ea2dedb773a853cdfdbf511ba4267ebc9b21f2dfa419e"
+  },
+  {
+    "path": "tests/test_fit_appearance3d.py",
+    "sha256": "190e290910a3d4d6b2d275289abb11d810e93fdb1ac7fb44fd025c077554a5fc"
+  },
+  {
+    "path": "tests/test_fit_motion3d.py",
+    "sha256": "6c0a50ff826c029d237db5c714b83d418cac6d62951ee41c36ed5067d6ba89e5"
+  },
+  {
+    "path": "tests/test_gaussian3d.py",
+    "sha256": "34729f18de94222ac7ad4fa358bacaace3e5a230dda8d1867f18c11650942524"
+  },
+  {
+    "path": "tests/test_gaussian_actions.py",
+    "sha256": "71174293730b9c64319121d0fb93c6d57611fdc2ead3de8a995bf2456d465aee"
+  },
+  {
+    "path": "tests/test_gaussian_agent_edits.py",
+    "sha256": "56e98bfcfadbd30feb1e67156e7ef418ccb5cb71807a85bb91d2718677a67453"
+  },
+  {
+    "path": "tests/test_gaussian_asset_bank.py",
+    "sha256": "8a1c0f1fcd2c9f9fca8b7e8740d04e120e3807d04cd9b6cfe6bba2d14ae75fbd"
+  },
+  {
+    "path": "tests/test_gaussian_coverage_refresh.py",
+    "sha256": "2cf7b830cb9b13e5c2dcffb4342334adfed671a52ad9ec4d1889cba73c18ab4c"
+  },
+  {
+    "path": "tests/test_gaussian_edit_workers.py",
+    "sha256": "5291e9ebd4cb81bb1e0425ccaecdf7d61cf430ad2f58220a8806109dcd656f88"
+  },
+  {
+    "path": "tests/test_gaussian_edits.py",
+    "sha256": "f9e16fd9a2b348b7abc0b06b40a7a0f31ac660d0f2b0409daf21e8a96d31dd09"
+  },
+  {
+    "path": "tests/test_gaussian_latent_memory.py",
+    "sha256": "f62129515dd68f633c0b7a53b44b762b0574a159e0e344ea354f8d3256ddf5da"
+  },
+  {
+    "path": "tests/test_gaussian_memory_lifetimes.py",
+    "sha256": "8d920c35cb77669a070c3c87a0389159cdba940e6b46024c9fef621e56128386"
+  },
+  {
+    "path": "tests/test_gaussian_object_agent.py",
+    "sha256": "a6ba0867f8b4f802d0fa47e993a0d42b1acfb9e46760f67c916fd75f189fde29"
+  },
+  {
+    "path": "tests/test_gaussian_part_ownership.py",
+    "sha256": "e8b37e79a10a1f73a74311495757edb5d77cf3e8f8d4705ad288915eec8f8852"
+  },
+  {
+    "path": "tests/test_gaussian_part_protocol.py",
+    "sha256": "db578c65d07193e95a8724b28ee18d852336a9d44c5f5220131ccc23bf96f17f"
+  },
+  {
+    "path": "tests/test_gaussian_program.py",
+    "sha256": "19b32f046cf1a92585177beb2dd2f61d1e0b74b6de1c6bbc52633fd4db4b12ff"
+  },
+  {
+    "path": "tests/test_gaussian_scene_objects.py",
+    "sha256": "34312f4aca6b434c490400e40d6b27ab609a57248552fdc758cb5fa5c62bd29f"
+  },
+  {
+    "path": "tests/test_gaussian_video_memory.py",
+    "sha256": "64e143708b1de99241948e5940e77dc373c3c56d36cd953fcdac4807e04ec41d"
+  },
+  {
+    "path": "tests/test_gemini_edit_planner.py",
+    "sha256": "d53f2b05777c18a034a4807825fdc8f21b8aecf1937b48371e1cd9801d8a773d"
+  },
+  {
+    "path": "tests/test_gemini_image_assets.py",
+    "sha256": "7bd244a99d1ef8455b28170e8e5623e9c203d217b42177cc20578a307f0f41ab"
+  },
+  {
+    "path": "tests/test_gemini_settings.py",
+    "sha256": "def2f844af835b169c0a92592bd0713f19005d55c7e8656958c41c2bd21acfdc"
+  },
+  {
+    "path": "tests/test_generation_readiness.py",
+    "sha256": "e20658a9f6671d8fff766451651005894c0a872e80f9c590e0395956152a7699"
+  },
+  {
+    "path": "tests/test_guarded_worker.py",
+    "sha256": "f5c92f8884910a96af65066fa3491d839bd962ffd40687e1be507cf33604de6d"
+  },
+  {
+    "path": "tests/test_hunyuan_appearance.py",
+    "sha256": "cc2c5a854f0793e9cd4dc37a04fba5803dd11cb765f97c1749993b9c0287342c"
+  },
+  {
+    "path": "tests/test_hunyuan_multiview.py",
+    "sha256": "17d6aa11af569dffbc607009b2013f5edbf609e50f7ae7b7733c932eec117eb3"
+  },
+  {
+    "path": "tests/test_identity_conditioning.py",
+    "sha256": "b4db3625280a855130874f0d89ffea483181b2c1d774537501a7a245d356942e"
+  },
+  {
+    "path": "tests/test_instantmesh_adapter.py",
+    "sha256": "94b64fe28b70ea936c8b4e45f3125ce381956cd3eb11dfcf229d3bd11e72bc38"
+  },
+  {
+    "path": "tests/test_joint_acceleration.py",
+    "sha256": "f8542a9e13d14dbfd39c763a6d2dab4f3b0739b0bb566e95bc0f52ad77d43c10"
+  },
+  {
+    "path": "tests/test_jupyter_transfer.py",
+    "sha256": "844512e1cd47c6f934a61074ef1fc1d140c68718c264289d0911feb765a386fe"
+  },
+  {
+    "path": "tests/test_latent.py",
+    "sha256": "b24cc11f64a729e4c21d7f9669ffd37c7f87203b86e741b524b4fa1f109fa061"
+  },
+  {
+    "path": "tests/test_latent_appearance_training.py",
+    "sha256": "54fda16545c74c7dfe142d0d8558a7fdcd7e37774509b11c9042bcc654e4e7ce"
+  },
+  {
+    "path": "tests/test_latent_track_memory.py",
+    "sha256": "a75d0ec5009565638c61b17fa85b42b04e9fdddb9d97ff4a8be246066fb01615"
+  },
+  {
+    "path": "tests/test_learned_motion.py",
+    "sha256": "ea142bfee14aada4749a434a734cf9283d475744785941b2175be3a7b51cb29a"
+  },
+  {
+    "path": "tests/test_local_object_repair.py",
+    "sha256": "81aae5c0e77ed7b63f7b6e912550b132316ddfa39367847c58fe0587d8f5404c"
+  },
+  {
+    "path": "tests/test_math_properties.py",
+    "sha256": "a45d45567c4db375e193d9441305b6ba3fdbae65aff504b547743123808eeb79"
+  },
+  {
+    "path": "tests/test_middle_surface.py",
+    "sha256": "c5ba27777c7809184d8eb572007430700b35724459cb348132471d514eaca030"
+  },
+  {
+    "path": "tests/test_model_cache_release.py",
+    "sha256": "7cd8327888f5c77088a0f09d0c79dda090c831c9a3a0b14a5510a0adbfc076db"
+  },
+  {
+    "path": "tests/test_motion_coherence.py",
+    "sha256": "105101e7cbf972c6de8662d0c331bae33136795e808088feb41d9d374b052241"
+  },
+  {
+    "path": "tests/test_motion_memory.py",
+    "sha256": "f30140d1e7db3a51105bbb89c660bcebb8070bbdc81b2a40940bb58c79156054"
+  },
+  {
+    "path": "tests/test_motion_model_io.py",
+    "sha256": "885eb932e8405921af84407110d64b31caf17837b6d1e552d6fd37e8af335cdc"
+  },
+  {
+    "path": "tests/test_motion_only_session.py",
+    "sha256": "2ee24ee3a937fcbc7067930d34e8f8140eb9859ce61e7a38a09c326b33875522"
+  },
+  {
+    "path": "tests/test_motion_retention.py",
+    "sha256": "347482fd3ff61f9f506114bbd01924446c84f92e38e364d5f9b25239c5b9726e"
+  },
+  {
+    "path": "tests/test_observed_part_placement.py",
+    "sha256": "63a15cd81c3a82ea0c3e1b408eaf439a3878713fcc8d81996809fe582938f2ad"
+  },
+  {
+    "path": "tests/test_persistent_gaussian.py",
+    "sha256": "e898aef457d883c28107433d8679d422529bab49946ca24d07508d87f1ecfcd2"
+  },
+  {
+    "path": "tests/test_prompt_gaussian_video.py",
+    "sha256": "e7d7a085bda957ca807881c368eab33a8b3cb8bb4cc327ff36f589a2569a00de"
+  },
+  {
+    "path": "tests/test_public_export.py",
+    "sha256": "c90ee987a7d696bb23eaec3454a227dfd03ac016e93e79ade5a4be9956230fd2"
+  },
+  {
+    "path": "tests/test_quadruped_controller.py",
+    "sha256": "8a96e25299bf823205f9043972bcb2dd84d9a6caf76cc089f34ebed40274e90d"
+  },
+  {
+    "path": "tests/test_real_video.py",
+    "sha256": "bddd100b8f9b029af8f44e9f016973be712b18500c409520132aec329a8b1b39"
+  },
+  {
+    "path": "tests/test_record_apple_repair.py",
+    "sha256": "6d7919a603994ef942ad02e4146193648322315299c54ed0b2aea65b6a1903c3"
+  },
+  {
+    "path": "tests/test_region_detail.py",
+    "sha256": "d8e31c2d3405cfcfddec5868c2c4f1e49ce4ca002bf98ea1a2c592393c6aaec3"
+  },
+  {
+    "path": "tests/test_replay.py",
+    "sha256": "c356fc49d078e383d1a0cad1a44bfe782d269cdbeda2cf50429cd06d16f9029a"
+  },
+  {
+    "path": "tests/test_residual_gaussian_writer.py",
+    "sha256": "2cf9eba561ee0774e7501d3b993259cab9fcb4a7c37aab7a837ab9d031af7925"
+  },
+  {
+    "path": "tests/test_resumable_model_download.py",
+    "sha256": "b145ff95a1ecb5fb37515102339e8cc4ad07621a02a4e9db46fb84077b2394f8"
+  },
+  {
+    "path": "tests/test_resume_attached_vectors.py",
+    "sha256": "10e4ac7935688870dd721ef302c5e529c9eb76484d439dd0d79aba4d9d06b727"
+  },
+  {
+    "path": "tests/test_runpod_bundle.py",
+    "sha256": "4549f33904cf8c43d7f0e7853c919f17bf3aad3064fa90481ccad8ca2fbf9327"
+  },
+  {
+    "path": "tests/test_runpod_client.py",
+    "sha256": "0d187e4053a2e936652e6dcdd15e010757646ef16822c3ce6b9db17f90758960"
+  },
+  {
+    "path": "tests/test_runpod_error_classification.py",
+    "sha256": "290960069d163e2c9e64ee38a497afb3faee33a2ddf378c57a804701e8bf0091"
+  },
+  {
+    "path": "tests/test_runpod_guard.py",
+    "sha256": "d89bf055d5f90fe9ff6d5c4127e4555ca348686d680f32623af1503c0b232f61"
+  },
+  {
+    "path": "tests/test_runway_bootstrap.py",
+    "sha256": "a7759d40520d53688c069a27b6e1bec2fb71e1655d31a7dd788525c742c28c35"
+  },
+  {
+    "path": "tests/test_runway_pilot.py",
+    "sha256": "36d6563f46783456e69f4850ae6d30048c20bc0a216c8dbe06ec5cf8f90a9763"
+  },
+  {
+    "path": "tests/test_runway_settings.py",
+    "sha256": "0bf1dcf1432475e54e60cc515d763e6a29eca8ce313955dd59d0e19bdbde8c65"
+  },
+  {
+    "path": "tests/test_semantic_fresh_identity.py",
+    "sha256": "db77afd38d97d1b843107bcf6cb8825d7b23bd166e468d59433e17bd2e9fbd9f"
+  },
+  {
+    "path": "tests/test_semantic_runner.py",
+    "sha256": "4963d1355ee2f760d70753383b707d0e66fb29ba1f57e300314413d8ebb3bbcb"
+  },
+  {
+    "path": "tests/test_session.py",
+    "sha256": "857e899ef425af3d49f09f0345d6c9737bfb7e41653c520ddb46429219ade39b"
+  },
+  {
+    "path": "tests/test_studio_agent_events.py",
+    "sha256": "d71b0a420a73050afcccfc4ef0930859eda50c3700f141f7090ce487f3412851"
+  },
+  {
+    "path": "tests/test_studio_agent_tasks.py",
+    "sha256": "51b42fa42c49fee3a0cf42a80ba3853d76c2e04eda8d63e0b8e02883dac7f0cd"
+  },
+  {
+    "path": "tests/test_studio_audio_mix.py",
+    "sha256": "e583b5d6c4189b60995cf857c09120a8a4657e038f7d8bbdc9f4d2d0d3e680f6"
+  },
+  {
+    "path": "tests/test_studio_backend.py",
+    "sha256": "f298d6afbf0a8ae18ab9f9942e0f45550609a196f314cc8151553f0c40a3a1de"
+  },
+  {
+    "path": "tests/test_studio_projects.py",
+    "sha256": "32e4437f2f2555ee315faf83b59018a4360a2a2ce2483d76ee82f66afcc23d22"
+  },
+  {
+    "path": "tests/test_studio_sound_events.py",
+    "sha256": "b8a3a5af8fb303d88136c344babed2cd34994b73c499936a87368821e4f94d2a"
+  },
+  {
+    "path": "tests/test_studio_swarm.py",
+    "sha256": "00b653b1d080eb228ad8f0ebb17aebd9360a83cc990cc8d99395df3c2aab6605"
+  },
+  {
+    "path": "tests/test_surface_skin3d.py",
+    "sha256": "55db81cc7c2116d41238ebd1f2f29c06c89dc4bcc8abccbd58df3e5397e11074"
+  },
+  {
+    "path": "tests/test_temporal_dog_repeat.py",
+    "sha256": "2b53f0fcbc2554354b0c21ba0d51a162dfdca08804f2360f5687caf8a0b4c063"
+  },
+  {
+    "path": "tests/test_temporal_motion_audit.py",
+    "sha256": "c01d7a470b3ba4c6feca0948dfcce5bdaa2593986519e7f492853aa57deca5c8"
+  },
+  {
+    "path": "tests/test_temporal_wan_training.py",
+    "sha256": "098c1e41252253bcca95f80ec560550da48413f12875f37585abea53c2a04b88"
+  },
+  {
+    "path": "tests/test_texture_restore.py",
+    "sha256": "a991cece215a20b6d59c1507a33869ce8e9835f9bfa93c42fe56d665547e8818"
+  },
+  {
+    "path": "tests/test_vector_export.py",
+    "sha256": "c9952bae1fb85c7b70cd56f80c5ee0b561b0f86c68518ddec052e375cd4a813b"
+  },
+  {
+    "path": "tests/test_vector_motion_acceleration.py",
+    "sha256": "e07ae5fe23544ebba175544a5fdc3630bac5e9df97f100d8c3ff9fff909987cb"
+  },
+  {
+    "path": "tests/test_vector_motion_network.py",
+    "sha256": "a9c639f4e4467eeda943e08c82da6d018c0c72688e6ef358de605a9c7df3a23c"
+  },
+  {
+    "path": "tests/test_vector_motion_residual.py",
+    "sha256": "03a8c2e55de078360bb7da897afbbb6cd90a4481e3e8b0b456d7a1bd344959ec"
+  },
+  {
+    "path": "tests/test_vector_recording.py",
+    "sha256": "fb0d04f217b68e19b5650649de6995998955293e43d7aa5250c392b198e9bdeb"
+  },
+  {
+    "path": "tests/test_wan22_download_supervisor.py",
+    "sha256": "1d874e507256f83dad03faeb0955c011d3e2a2ba7dc644b632554cf72126b60c"
+  },
+  {
+    "path": "tests/test_wan22_download_transport.py",
+    "sha256": "a9fc63d1dbff2774fd147b4835ab02585819eb2ee11114e3f10d58c1349fc31b"
+  },
+  {
+    "path": "tests/test_wan22_gaussian_anchor.py",
+    "sha256": "9e5a079f4fe9c7998e1a22a3fccf161954965c27dde8edfc68f7737375e71b8d"
+  },
+  {
+    "path": "tests/test_wan22_native_parity.py",
+    "sha256": "0462b10f2c81645045e1ebff3a8662bb5f074b7c88cc5341a3cbd1ac5d390706"
+  },
+  {
+    "path": "tests/test_wan22_runner.py",
+    "sha256": "63974c6e48c6046eab5490e8e0b14c0b7522c269ffddc98d754d801a44f42704"
+  },
+  {
+    "path": "tests/test_wan_baseline.py",
+    "sha256": "90e2520276cefc063bb81dc3b41edfd2131b7e46e7ce6f0d4c5344c2e20f2856"
+  },
+  {
+    "path": "tests/test_wan_bridge_training.py",
+    "sha256": "396f6b5923d668734ea36dabe33e62c4fa06dfb218ed1c9e01cbcafd62fc377b"
+  },
+  {
+    "path": "tests/test_wan_cat_memory.py",
+    "sha256": "358fcdd912b3d5b758334f32207e6d874a3d19fb44df9cb8eb973753799ad10b"
+  },
+  {
+    "path": "tests/test_wan_gaussian.py",
+    "sha256": "7cdfe31bc9e7008807475fb4795d521877556dd4c4488a025c0fc21c2831275a"
+  },
+  {
+    "path": "tests/test_wan_latent_appearance.py",
+    "sha256": "0a8f2de132f4dffb994fb4c38d3d9b812a080a46680c1d464fdd6237308fe869"
+  },
+  {
+    "path": "tests/test_wan_part_control.py",
+    "sha256": "795ad1b95dab8f5dc286ed40f1c6161323a4d4562e4dbf6fc615360e81acb520"
+  },
+  {
+    "path": "tests/test_wan_spatial_gaussian.py",
+    "sha256": "3aefcd6a20f0866d12719163efd00c596f45a7965dfd72053b0d1a42567aa2ee"
+  },
+  {
+    "path": "tests/test_wan_temporal_control.py",
+    "sha256": "76aeab43450e03594e83d123f19cceb000efdc363a5a48ee1f6025d92a03481c"
+  },
+  {
+    "path": "tests/test_weld_band.py",
+    "sha256": "0628df74451850f4222fde331ae097442d0c981b6994f87103088bbc322d26dc"
+  },
+  {
+    "path": "tests/test_zero123_views.py",
+    "sha256": "7e628e4c9834711c5b52543ef7a7bcd6c53274c70da16e1dc0819ed272670a74"
+  }
+]

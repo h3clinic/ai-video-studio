@@ -1,0 +1,45 @@
+AI VIDEO STUDIO — WHOLE-PRODUCT DEMO
+Three-minute narration guide. Read naturally; exact spoken timing needs rehearsal.
+Visual recording and generated sound are separate from your spoken narration.
+
+00:00–00:30 — The product
+
+Most AI video tools give you a finished clip. But when you want to change one object, one action, or one sound, you often return to generation.
+We're building AI Video Studio around a different idea: a persistent scene that specialized agents can understand and edit.
+Our long-term representation is a collection of three-dimensional Gaussians—each with position, appearance, orientation, and scale. Groups of Gaussians represent scene parts. The goal is to let an agent change its assigned part while preserving everything else.
+
+00:30–01:00 — The agent system
+
+The desktop application makes that work visible.
+We adapted a fourteen-role agent protocol covering planning, perception, task assignment, motion, sound, and verification. Roles can expand into multiple specialists: this recorded run contains seventeen completed workers, including three sound agents.
+Gemini supplies specialist briefs. Selecting a worker exposes its task, execution type, timing, and output.
+Importantly, a completed brief is not automatically a completed scene edit. We track those stages separately, so a planning success cannot silently become a claim that the geometry changed.
+
+01:00–01:35 — SpacetimeDB
+
+SpacetimeDB provides the collaboration and memory layer for editing instructions—not the video pixels themselves.
+Our underlying tables are private. Clients subscribe to membership-filtered views, and owners grant editor or viewer access.
+Each part instruction carries an expected revision. A transactional reducer checks that revision, updates the draft, and appends the previous value, new value, author, and database timestamp.
+That prevents silent overwrites. Repeated operation IDs are idempotent.
+We also distinguish execution-client measurements from database receipt times. This lets us investigate slow agents without pretending a synchronization timestamp measures model inference.
+These collaboration features currently run against a local database.
+
+01:35–02:10 — ElevenLabs
+
+ElevenLabs gives the agents an audible output.
+For this scene, three specialists generated separate effects: outdoor ambience, donkey chewing, and fruit interacting with the bowl.
+Each request produces a stored audio artifact with duration and checksum metadata. The interface exposes independent volume controls, so I can rebalance the sound without generating the video again.
+Export verifies those artifacts, applies the gains, limits the combined signal, and copies the existing video stream into an MP4.
+That mixing step makes zero additional model API calls. Precise synchronization with individual bites still needs editorial review.
+
+02:10–02:40 — Gaussian editing and compute
+
+The Gaussian research extends that same principle to visual changes: retain the scene, identify the affected primitives, and apply a bounded update.
+But the difficult part is correspondence—knowing which Gaussians belong to a whole fruit, a slice, or a mouth-held piece, across motion and occlusion.
+That replacement pipeline is not yet validated. We are not presenting the current sound-enhanced video as a successful Gaussian apple replacement, or claiming an unmeasured generation speedup.
+
+02:40–03:00 — Close
+
+What works today is an inspectable agent workspace, revision-controlled instructions, attributed history, real generated sound layers, and export.
+SpacetimeDB makes collaboration traceable. ElevenLabs makes sound independently editable.
+The larger product direction is persistent, part-level video editing: change what you intend, preserve what you don't, and make every agent's contribution inspectable.

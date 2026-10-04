@@ -5,15 +5,20 @@
   "main": "electron/main.js",
   "scripts": {
     "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\"",
-    "build": "vite build",
+    "build": "node electron/stage-backend.cjs && tsc --noEmit && vite build",
+    "backend:verify": "node electron/stage-backend.cjs",
+    "backend:refresh": "node electron/stage-backend.cjs --refresh-from",
+    "test": "node --test electron/*.test.js",
     "preview": "vite preview",
     "package": "npm run build && electron-builder"
   },
   "dependencies": {
+    "framer-motion": "^14.0.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "spacetimedb": "^2.10.2"
+    "react-router-dom": "^7.18.4",
+    "spacetimedb": "2.10.2"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
@@ -22,7 +27,7 @@
     "@vitejs/plugin-react": "^4.3.0",
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.0",
-    "electron": "^33.2.0",
+    "electron": "44.5.1",
     "electron-builder": "^25.1.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0",
@@ -34,10 +39,12 @@
     "productName": "AI Video Studio",
     "files": [
       "dist/**/*",
-      "electron/**/*.js"
+      "electron/**/*.js",
+      "electron/stage-backend.cjs"
     ],
     "directories": {
       "output": "release"
-    }
+    },
+    "extraResources": [{ "from": "backend", "to": "backend", "filter": ["**/*.py", "source-manifest.json"] }]
   }
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { connect, getConnection, getSessionEmail, isReady, subscribe as stdbSubscribe } from './spacetime'
+import { connect, getConnection, getSessionEmail, isReady, subscribe as stdbSubscribe, connectCollaboration, getCollaborationSnapshot, getCollaborationConnection, subscribeCollaboration } from './spacetime'
 
 interface StdbSnapshot {
   ready: boolean
@@ -58,4 +58,14 @@ export function useSpacetime() {
     reducers: snap.ready ? getConnection()?.reducers ?? null : null,
     procedures: snap.ready ? getConnection()?.procedures ?? null : null,
   }
+}
+
+export function useCollaboration() {
+  const [snapshot,setSnapshot]=useState(getCollaborationSnapshot)
+  useEffect(()=>{
+    const unsubscribe=subscribeCollaboration(()=>setSnapshot(getCollaborationSnapshot()))
+    connectCollaboration().catch(()=>{ /* reflected in the connection badge */ })
+    return unsubscribe
+  },[])
+  return {...snapshot,reconnect:connectCollaboration,reducers:getCollaborationConnection()?.reducers ?? null}
 }

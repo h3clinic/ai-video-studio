@@ -3,6 +3,11 @@ import { Plus, Send, Loader2, Sun, Moon, Trash2, Pencil, Check, X, PanelRightClo
 import { useTheme } from '@/contexts/ThemeContext'
 import { useSpacetime } from './useSpacetime'
 import { pickColor } from './spacetime'
+import AgentSpotlight from './AgentSpotlight'
+import AgentTimeline from './AgentTimeline'
+import ElevenLabsSettings from './ElevenLabsSettings'
+import LiveSwarm from './LiveSwarm'
+import SceneAudioMixer from './SceneAudioMixer'
 
 interface AgentNote {
   agentId: string
@@ -69,11 +74,20 @@ const AGENT_COUNTS: Record<string, string> = {
   'Verifiers': '44',
 }
 
+// Original role GIFs identify specialists; they are never project output media.
+const AGENT_ROLE_IDS: Record<string, string> = {
+  '49': 'idea-model', '50': 'video-controller', '51': 'crawler',
+  '52': 'decision', '53': 'vision-sensor', '54': 'section-leads',
+  '55': 'field-agents', '56': 'surroundings-list', '57': 'kind-checkers',
+  '58': 'mini-object-agents', '59': 'task-assigner', '60': 'vector-agents',
+  '61': 'sound-agents', '62': 'verifiers',
+}
+
 const WELCOME: Message = {
   id: 'welcome',
   role: 'assistant',
   content:
-    "Hey! Tell me what video you want to create and I'll handle scripting, visuals, voiceover, and editing.\n\nTry something like:\n- \"A 30-second product launch teaser with cinematic transitions\"\n- \"YouTube explainer about how solar panels work\"\n- \"Instagram reel for a coffee shop grand opening\"",
+    "What would you like to change?",
 }
 
 function makeId() {
@@ -134,7 +148,7 @@ function DoneAgentRow({ agentId }: { agentId: string; isDark: boolean }) {
   )
 }
 
-type PanelTab = 'video' | 'contents' | 'environment'
+type PanelTab = 'video' | 'contents' | 'environment' | 'timeline'
 
 async function hashPassword(email: string, password: string): Promise<string> {
   const enc = new TextEncoder()
@@ -339,7 +353,162 @@ function SignInGate({ stdb }: { stdb: ReturnType<typeof useSpacetime> }) {
   )
 }
 
+type LocalRow = Record<string, any>
+const localBridge = () => (window as any).gaussianStudio as {request: (path: string, body?: LocalRow) => Promise<any>} | undefined
+const localRows = (value: unknown): LocalRow[] => Array.isArray(value) ? value.filter(v => v && typeof v === 'object') : []
+const safeMedia = (url: unknown) => typeof url === 'string' && /^gaussian-media:\/\/artifact\/[a-zA-Z0-9_/?=&.-]+$/.test(url) ? url : undefined
+
+// Contents describes the assigned task. Audio and reviews do not operate on
+// Gaussian IDs; this display classification never grants visual edit access.
+export function partContentState(part: LocalRow, jobs: LocalRow[] = [], media: LocalRow[] = []) {
+  const matching = jobs.filter(job=>job.partId===part.id || localRows(job.workers).some(worker=>worker.partId===part.id))
+  const job = latestRuns(matching).current
+  const worker = localRows(job?.workers).find(row=>row.partId===part.id) || (job?.partId===part.id ? job : undefined)
+  const role = worker?.roleId || worker?.agentId || part.ownerRoleId || part.roleId || part.agentId
+  const status = worker?.status
+  const workflowRoles = ['idea-model','video-controller','crawler','decision','task-assigner','surroundings-list','kind-checkers','vision-sensor']
+  const visual = part.protected === true || part.bindingVerified === true || Number.isInteger(part.gaussianCount)
+  if (!visual && role==='sound-agents') {
+    const generated = status==='completed' && (worker?.execution==='elevenlabs_sound' || worker?.outputKind==='audio') && typeof worker?.output==='string' && !!worker.output
+    const audioId = worker?.mediaId ? 'audio_'+worker.mediaId : 'audio_'+worker?.id
+    const available = generated && media.some(item=>item.id===audioId && item.kind==='audio')
+    return {kind:'audio',requiresGeometryBinding:false,label:available ? 'Audio ready · Separate generated sound layer' : generated ? 'Audio generated · Preview unavailable' : status==='failed' ? 'Sound task failed · No audio generated' : status==='blocked' ? 'Sound task needs attention · No audio generated' : status==='running' ? 'Generating sound' : 'Sound task · No audio generated'}
+  }
+  if (!visual && (role==='verifiers' || workflowRoles.includes(role))) {
+    const review = role==='verifiers'
+    const prefix = review ? 'Review' : 'Workflow'
+    const completed = status==='completed' && worker?.execution==='specialist_brief'
+    return {kind:review?'review':'workflow',requiresGeometryBinding:false,
+      label:completed ? (review ? 'Review brief ready · Geometry quality unverified' : 'Brief ready · No visual edit executed') : `${prefix} task · ${status==='failed'?'Failed':status==='blocked'?'Needs attention':status==='running'?'In progress':'No brief produced'}`}
+  }
+  const bound = part.bindingVerified===true && Number.isInteger(part.gaussianCount) && part.gaussianCount>0
+  return {kind:'visual',requiresGeometryBinding:true,label:part.protected===true ? 'Protected scene part' : bound ? `Canonical IDs bound · ${part.gaussianCount} Gaussian IDs` : 'Unbound · Visual edits require verified Gaussian IDs'}
+}
+
+export function latestRuns(jobs: LocalRow[]) {
+  const submitted = (job: LocalRow) => {
+    const value = typeof job.createdAt==='number' ? job.createdAt : Date.parse(job.createdAt)
+    return Number.isFinite(value) ? value : 0
+  }
+  const ordered = jobs.map((job,index)=>({job,index})).sort((a,b)=>submitted(b.job)-submitted(a.job)||b.index-a.index).map(item=>item.job)
+  return {current:ordered[0],history:ordered.slice(1)}
+}
+
+export function runTimestamp(value: unknown) {
+  if (typeof value!=='string' && typeof value!=='number') return 'Time not recorded'
+  const date = new Date(value)
+  return Number.isFinite(date.getTime()) ? date.toLocaleString() : 'Time not recorded'
+}
+
+export function runProblem(job: LocalRow) {
+  if (!job.error && !/blocked|fail|error|reject/i.test(String(job.status))) return null
+  const detail = typeof job.error==='string' && job.error.trim() ? job.error.trim() : typeof job.stage==='string' && job.stage.trim() ? job.stage.trim() : `Run ${job.status}.`
+  const summary = detail.split(/\r?\n/)[0]
+  const short = summary.length>150 ? `${summary.slice(0,147)}…` : summary
+  if (/401|403|auth|credential|api.?key|permission/i.test(detail)) return {summary:short,action:'Check the provider credentials in Environment, then submit the task again.',environment:true}
+  if (job.kind==='apple_experiment') return {summary:short,action:'Open Environment to review the missing scene-replacement prerequisites.',environment:true}
+  if (/connect|unavailable|timeout|timed out|network|remote|gpu/i.test(detail)) return {summary:short,action:'Check the remote connection in Environment before retrying.',environment:true}
+  return {summary:short,action:job.kind==='agent_swarm' && job.status==='blocked' ? 'Review the unfinished tasks below, resolve their prerequisites, then resume.' : 'Review the run details and resolve the reported prerequisite before retrying.',environment:false}
+}
+
+const runLabel = (job: LocalRow, artwork?: Artifact) => job.kind==='agent_swarm' ? 'Scene team' : artwork?.agent || String(job.kind||'Task').replace(/_/g,' ')
+
+function RunDetails({job,artwork}: {job:LocalRow;artwork?:Artifact}) {
+  return <details style={{fontSize:11,lineHeight:1.6,marginTop:8}}>
+    <summary style={{cursor:'pointer',color:'var(--muted)'}}>Run details</summary>
+    {artwork&&<img src={artwork.gif} alt={`${artwork.agent} role illustration`} style={{width:44,height:25,objectFit:'cover',borderRadius:3,marginTop:8}}/>}
+    <div style={{color:'var(--faint)',marginTop:6}}>Run ID: {job.id}</div>
+    {job.stage&&<div style={{color:'var(--muted)',marginTop:6}}>{job.stage}</div>}
+    {job.partId&&<div style={{color:'var(--faint)'}}>Assigned part: {job.partId}</div>}
+    {job.prompt&&<div style={{marginTop:6,color:'var(--muted)'}}>Request: {job.prompt}</div>}
+    {job.reply&&<div style={{whiteSpace:'pre-wrap',marginTop:8}}>{job.reply}</div>}
+    {job.error&&<div style={{color:'#ef9999',whiteSpace:'pre-wrap',overflowWrap:'anywhere',marginTop:8}}>{String(job.error)}</div>}
+    <div style={{color:'var(--faint)',marginTop:6}}>Cost: {typeof job.cost_usd==='number'?`$${job.cost_usd.toFixed(4)}`:'Not measured'} · Quality: {typeof job.review==='string'?job.review:'Not accepted'}</div>
+    <div style={{color:'var(--faint)',marginTop:4}}>Submitted: {runTimestamp(job.createdAt)}{job.finishedAt?` · Finished: ${runTimestamp(job.finishedAt)}`:''}</div>
+  </details>
+}
+
+function RunProblem({job,onEnvironment}: {job:LocalRow;onEnvironment:()=>void}) {
+  const problem=runProblem(job)
+  if(!problem)return null
+  return <div style={{fontSize:12,lineHeight:1.5,marginTop:8}}>
+    <div style={{color:'#ef9999'}}>{problem.summary}</div>
+    <div style={{color:'var(--muted)',fontSize:11,marginTop:4}}>{problem.action}</div>
+    {problem.environment&&<button onClick={onEnvironment} style={{...gateLink,width:'auto',padding:'4px 0',marginTop:3,textDecoration:'underline'}}>Open Environment</button>}
+  </div>
+}
+
+export function RunHistory({jobs,artwork,onEnvironment,onAssign}: {jobs:LocalRow[];artwork:(id:unknown)=>Artifact|undefined;onEnvironment:()=>void;onAssign:(role:string,part:string)=>void}) {
+  if(!jobs.length)return null
+  return <details data-run-history="true" style={{borderTop:'1px solid var(--line)',paddingTop:14,marginTop:22,fontSize:12}}>
+    <summary style={{cursor:'pointer',color:'var(--muted)'}}>History · {jobs.length} earlier {jobs.length===1?'run':'runs'}</summary>
+    <div style={{fontSize:10,color:'var(--faint)',margin:'8px 0'}}>Previous submissions · newest first</div>
+    {jobs.map(job=><details key={job.id} data-history-run={job.id} style={{border:'1px solid var(--line)',padding:10,borderRadius:4,marginBottom:8,lineHeight:1.6}}>
+      <summary style={{cursor:'pointer'}}>{runLabel(job,artwork(job.agentId))} · {job.status}<span style={{display:'block',fontSize:10,color:'var(--faint)',marginTop:3}}>{runTimestamp(job.createdAt)}</span></summary>
+      {job.stage&&<div style={{color:'var(--muted)',marginTop:7}}>{job.stage}</div>}
+      <RunProblem job={job} onEnvironment={onEnvironment}/>
+      {job.kind==='agent_swarm'&&<LiveSwarm job={job} artwork={artwork} onAssign={onAssign}/>}
+      <RunDetails job={job} artwork={artwork(job.agentId)}/>
+    </details>)}
+  </details>
+}
+
+export function appleReplacementReadiness(value: unknown) {
+  const capability = value && typeof value==='object' && !Array.isArray(value) ? value as LocalRow : {}
+  const revision = typeof capability.revision==='string' && /^[A-Za-z0-9._-]{1,120}$/.test(capability.revision) ? capability.revision : null
+  const missing = Array.isArray(capability.missing) ? capability.missing.filter((item: unknown): item is string => typeof item==='string' && item.length>0).slice(0,16) : []
+  const validMissing = Array.isArray(capability.missing) && capability.missing.length<=16 && capability.missing.every((item: unknown)=>typeof item==='string' && item.length>0)
+  const ready = capability.ready===true && revision!==null && revision!=='semantic-static-v1-rejected' && validMissing && missing.length===0
+  return {ready, revision, missing, reason:typeof capability.reason==='string' && capability.reason.trim()
+    ? capability.reason
+    : ready ? 'A versioned replacement pipeline is available.' : 'A repaired material/contact pipeline has not been made available. The rejected static-apple experiment will not be repeated.'}
+}
+
+export function remoteFailure(remote: unknown) {
+  if (!remote || typeof remote!=='object' || Array.isArray(remote)) return null
+  const state = remote as LocalRow
+  const explanations: Record<string,string> = {
+    auth_failed:'RunPod rejected the saved owner authorization. A successful connection has not been verified.',
+    permission_denied:'The saved owner authorization cannot access this RunPod resource.',
+    unavailable:'RunPod is unavailable. No successful connection has been verified.',
+  }
+  return typeof state.error==='string' && state.error.trim() ? state.error : explanations[state.status] || null
+}
+
+function DesktopAgentCard({agent, state, parts, onTask}: {
+  agent: Artifact; state?: LocalRow; parts: LocalRow[]; onTask: () => void
+}) {
+  const status = typeof state?.status === 'string' ? state.status : 'No task submitted'
+  const assigned = parts.filter(p => p.ownerRoleId===AGENT_ROLE_IDS[agent.id] || p.agentId===AGENT_ROLE_IDS[agent.id] ||
+    (Array.isArray(state?.partIds) && state.partIds.includes(p.id)))
+  return <div data-agent-role={AGENT_ROLE_IDS[agent.id]} style={{padding:'10px 12px',borderBottom:'1px solid var(--line-soft)'}}>
+    <div style={{display:'flex',alignItems:'center',gap:9}}>
+      <img src={agent.gif} alt={`${agent.agent} role illustration`} title="Role illustration — not project output" style={{width:112,height:68,objectFit:'contain',borderRadius:6,flexShrink:0}}/>
+      <div style={{flex:1,minWidth:0}}>
+        <div style={{fontSize:12,fontWeight:600}}>{agent.agent}</div>
+        <div style={{fontSize:10,color:'var(--faint)',marginTop:3}}>{state?.model || 'Owner-configured backend'}</div>
+      </div>
+      <button aria-label={`Task ${agent.agent}`} onClick={onTask} style={{background:'var(--panel)',border:'1px solid var(--line)',borderRadius:3,padding:'5px 7px',color:'var(--text)',cursor:'pointer'}}><Send size={12}/></button>
+    </div>
+    <div style={{fontSize:11,marginTop:7,color:/blocked|fail|error/i.test(status)?'#ef9999':'var(--muted)'}}>{status}</div>
+    <div style={{fontSize:11,color:'var(--faint)',marginTop:4,lineHeight:1.5}}>{typeof state?.task==='string' && state.task ? state.task : agent.desc}</div>
+    {assigned.length>0 && <div style={{fontSize:10,color:'var(--muted)',marginTop:6}}>Parts: {assigned.map(p=>p.label||p.id).join(', ')}</div>}
+  </div>
+}
+
+function BrowserApp() { const stdb = useSpacetime(); return <StudioApp stdb={stdb} /> }
 export default function App() {
+  const sharedProject=new URLSearchParams(window.location.search).get('collaborate')
+  if(!localBridge() && sharedProject && /^[A-Za-z0-9_-]{1,80}$/.test(sharedProject)) return <div style={{height:'100vh',overflowY:'auto',background:'var(--canvas)'}}>
+    <header style={{padding:'20px 28px',borderBottom:'1px solid var(--line)'}}><h1 style={{fontSize:20}}>AI Video Studio · Shared editor</h1><p style={{fontSize:12,color:'var(--muted)',marginTop:6}}>Local collaboration for {sharedProject}. Ask the project owner to grant your public device identity access. API keys and remote execution remain in the owner’s desktop app.</p></header>
+    <div style={{maxWidth:860,margin:'0 auto'}}><AgentTimeline projectId={sharedProject} jobs={[]} agents={AGENTS.map(a=>({id:AGENT_ROLE_IDS[a.id],name:a.agent}))} parts={[]} dark={true}/></div>
+  </div>
+  if (!localBridge()) return <BrowserApp />
+  const empty = {sessionEmail:'Local workspace', collaborators:[], agentRuns:[], agentChanges:[], projects:[], studioUsers:[],ready:false,failed:false,reducers:null,procedures:null} as unknown as ReturnType<typeof useSpacetime>
+  return <StudioApp stdb={empty} />
+}
+
+function StudioApp({stdb}: {stdb: ReturnType<typeof useSpacetime>}) {
   const { theme, toggleTheme } = useTheme()
   const [chats, setChats] = useState<Chat[]>([
     { id: 'default', title: 'New video', messages: [WELCOME], createdAt: Date.now() },
@@ -350,7 +519,7 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [editingChatId, setEditingChatId] = useState<string | null>(null)
   const [editTitle, setEditTitle] = useState('')
-  const [panelOpen, setPanelOpen] = useState(false)
+  const [panelOpen, setPanelOpen] = useState(true)
   const [panelTab, setPanelTab] = useState<PanelTab>('video')
   const [selectedAgent, setSelectedAgent] = useState<Artifact | null>(null)
   const [playing, setPlaying] = useState(false)
@@ -358,11 +527,47 @@ export default function App() {
   const [activeAgentIdx, setActiveAgentIdx] = useState(-1)
   const [expandedContentId, setExpandedContentId] = useState<string | null>(null)
   const [targetAgent, setTargetAgent] = useState<Artifact | null>(null)
+  const [targetPartId, setTargetPartId] = useState<string | null>(null)
   const revealTimerRef = useRef<number | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
-  const stdb = useSpacetime()
+  const desktop = !!localBridge()
+  const [backend, setBackend] = useState<LocalRow>({})
+  const [backendError, setBackendError] = useState('')
+  const [actionError, setActionError] = useState('')
+  const [remotePod, setRemotePod] = useState('')
+  const [remoteUrl, setRemoteUrl] = useState('')
+  const [localBusy, setLocalBusy] = useState(false)
+  const refreshBackend = async () => {
+    if (!desktop) return
+    try { const next = await localBridge()!.request('/api/state'); setBackend(next); setBackendError('');setChats(prev=>[...prev,...localRows(next.projects).filter(p=>!prev.some(c=>c.id===p.id)).map(p=>({id:String(p.id),title:String(p.title||'New video'),createdAt:Number(p.createdAt)||Date.now(),messages:[WELCOME]}))]) }
+    catch(e) {setBackendError(e instanceof Error ? e.message : 'Backend unavailable')}
+  }
+  useEffect(() => { if(!desktop)return; void refreshBackend(); const timer=window.setInterval(()=>{if(!document.hidden)void refreshBackend()},3000);return()=>window.clearInterval(timer) }, [desktop])
+  const localAction = async(path:string,body:LocalRow) => {
+    if(localBusy)return;setLocalBusy(true);setActionError('')
+    try {await localBridge()!.request(path,body);await refreshBackend()}
+    catch(e){setActionError(e instanceof Error?e.message:'Request failed');await refreshBackend()}
+    finally{setLocalBusy(false)}
+  }
+  const projectJobs = localRows(backend.jobs).filter(j=>j.projectId===activeChatId)
+  const {current:currentRun,history:pastRuns} = latestRuns(projectJobs)
+  const latestSwarm = latestRuns(projectJobs.filter(j=>j.kind==='agent_swarm')).current
+  const newestTeam = latestRuns(localRows(backend.jobs).filter(j=>j.kind==='agent_swarm')).current
+  const newestTeamSession = chats.find(c=>c.id===newestTeam?.projectId)
+  const visibleJobs = projectJobs.flatMap(j=>j.kind==='agent_swarm' && Array.isArray(j.workers)?[...j.workers.map((w:LocalRow)=>({...w,id:`${j.id}_${w.id}`,parentRunId:j.id,projectId:j.projectId,agentId:w.roleId,kind:'agent_worker',stage:w.summary||w.task})),j]:[j])
+  const referencePrompt = input.trim() || [...projectJobs].reverse().find(j=>j.kind==='plan' && typeof j.prompt==='string')?.prompt || ''
+  const projectMedia = localRows(backend.media).filter(m=>m.projectId===activeChatId).filter((m,i,rows)=>!m.assetId||rows.findIndex(other=>other.assetId===m.assetId)===i)
+  const projectParts = localRows(backend.parts).filter(p=>p.projectId===activeChatId)
+  const projectAgents = localRows(backend.agents).filter(a=>a.projectId===activeChatId)
+  const appleReplacement = appleReplacementReadiness(backend.capabilities?.appleReplacement)
+  const remoteError = remoteFailure(backend.remote)
+  const roleState = (agent: Artifact) => projectAgents.find(a => a.roleId===AGENT_ROLE_IDS[agent.id] || a.id===AGENT_ROLE_IDS[agent.id])
+  const roleArtwork = (id: unknown) => AGENTS.find(a=>a.id===id || AGENT_ROLE_IDS[a.id]===id)
+  const openEnvironment = () => {setPanelOpen(true);setPanelTab('environment')}
+  const assignRunTask = (role:string,part:string) => {const agent=roleArtwork(role);if(agent)taskAgent(agent,{id:part})}
+  const partArtwork = (part: LocalRow) => roleArtwork(part.ownerRoleId || part.roleId || part.agentId) || AGENTS.find(a=>a.id==='59')!
   const authedUser = stdb.sessionEmail
   const onlineCollaborators = stdb.collaborators.filter(c => c.online)
 
@@ -379,112 +584,39 @@ export default function App() {
   }, [activeChat.messages])
 
   useEffect(() => {
+    setTargetAgent(null)
+    setTargetPartId(null)
+    setActionError('')
     inputRef.current?.focus()
   }, [activeChatId])
 
-  const taskAgent = (agent: Artifact) => {
+  const taskAgent = (agent: Artifact, part?: LocalRow) => {
     setTargetAgent(agent)
+    setTargetPartId(part ? String(part.id) : null)
     setInput('')
     inputRef.current?.focus()
   }
 
-  const handleSend = () => {
-    if (!input.trim() || generating) return
-    const displayContent = targetAgent ? `@${targetAgent.agent} ${input.trim()}` : input.trim()
-    const userMsg: Message = { id: makeId(), role: 'user', content: displayContent }
-
-    setChats(prev =>
-      prev.map(c =>
-        c.id === activeChatId
-          ? {
-              ...c,
-              messages: [...c.messages, userMsg],
-              title: c.messages.length <= 1 ? input.trim().slice(0, 40) : c.title,
-            }
-          : c
-      )
-    )
-    const chatId = activeChatId
-    const currentTarget = targetAgent
-    setInput('')
-    setTargetAgent(null)
-
-    if (currentTarget) {
-      setGenerating(true)
-      window.setTimeout(() => {
-        const reply: Message = {
-          id: makeId(),
-          role: 'assistant',
-          content: `[${currentTarget.agent}] Working on it. ${currentTarget.output}`,
-          agents: [{ agentId: currentTarget.id, note: currentTarget.desc }],
-        }
-        setChats(prev =>
-          prev.map(c =>
-            c.id === chatId ? { ...c, messages: [...c.messages, reply] } : c
-          )
-        )
-        setGenerating(false)
-        if (!panelOpen) setPanelOpen(true)
-      }, 1200)
-      return
-    }
-
-    setGenerating(true)
-    setRevealedAgents([])
-    setActiveAgentIdx(-1)
-
-    if (revealTimerRef.current) {
-      clearTimeout(revealTimerRef.current)
-      revealTimerRef.current = null
-    }
-
-    const { content, agents } = getAgentReply(input.trim())
-
-    const introMsg: Message = { id: makeId(), role: 'assistant', content }
-    setChats(prev =>
-      prev.map(c =>
-        c.id === chatId ? { ...c, messages: [...c.messages, introMsg] } : c
-      )
-    )
-    if (!panelOpen) setPanelOpen(true)
-
-    stdb.reducers?.createProject({ name: displayContent.slice(0, 40), prompt: displayContent })
-
-    const agentsCopy = [...agents]
-    let idx = 0
-    const reveal = () => {
-      if (idx < agentsCopy.length) {
-        const current = agentsCopy[idx]
-        setRevealedAgents(agentsCopy.slice(0, idx + 1))
-        setActiveAgentIdx(idx)
-
-        const agent = AGENTS.find(a => a.id === current.agentId)
-        if (agent) {
-          stdb.reducers?.startAgentRun({ projectId: 0n, agentId: agent.id, agentName: agent.agent, executionOrder: idx })
-        }
-
-        idx++
-        revealTimerRef.current = window.setTimeout(reveal, 2200)
-      } else {
-        setGenerating(false)
-        setActiveAgentIdx(-1)
-        const doneMsg: Message = {
-          id: makeId(),
-          role: 'assistant',
-          content: 'All 14 agent types active. ~175 instances running. Check the Browser panel for details.',
-        }
-        setChats(prev =>
-          prev.map(c =>
-            c.id === chatId ? { ...c, messages: [...c.messages, doneMsg] } : c
-          )
-        )
-      }
-    }
-    revealTimerRef.current = window.setTimeout(reveal, 800)
+  const handleSend = async () => {
+    if(!input.trim() || generating)return
+    const prompt=input.trim()
+    const assignment=targetAgent?{agentId:AGENT_ROLE_IDS[targetAgent.id],...(targetPartId?{partId:targetPartId}:{})}:null
+    const visiblePrompt=targetAgent?`@${targetAgent.agent}${targetPartId?` / ${targetPartId}`:''}: ${prompt}`:prompt
+    const chatId=activeChatId
+    setChats(prev=>prev.map(c=>c.id===chatId?{...c,title:c.messages.length<=1?prompt.slice(0,40):c.title,messages:[...c.messages,{id:makeId(),role:'user',content:visiblePrompt}]}:c))
+    setInput('');setTargetAgent(null);setTargetPartId(null);setGenerating(true);setPanelOpen(true)
+    try {
+      if(!desktop)throw new Error('Connect the desktop Gaussian backend to submit a real generation job.')
+      await localBridge()!.request('/api/jobs',assignment?{kind:'agent_task',prompt,projectId:chatId,...assignment}:{kind:'plan',prompt,projectId:chatId})
+      await refreshBackend()
+    }catch(e){setChats(prev=>prev.map(c=>c.id===chatId?{...c,messages:[...c.messages,{id:makeId(),role:'assistant',content:e instanceof Error?e.message:'Submission failed'}]}:c))}
+    finally{setGenerating(false)}
   }
 
-  const newChat = () => {
+
+  const newChat = async () => {
     const id = makeId()
+    if(desktop){try{await localBridge()!.request('/api/projects',{id,title:'New video'})}catch(e){setBackendError(e instanceof Error?e.message:'Could not create session');return}}
     setChats(prev => [
       { id, title: 'New video', messages: [WELCOME], createdAt: Date.now() },
       ...prev,
@@ -492,7 +624,8 @@ export default function App() {
     setActiveChatId(id)
   }
 
-  const deleteChat = (id: string) => {
+  const deleteChat = async (id: string) => {
+    if(desktop){try{await localBridge()!.request('/api/projects',{id,title:chats.find(c=>c.id===id)?.title||'New video',archived:true})}catch(e){setBackendError(e instanceof Error?e.message:'Could not archive session');return}}
     setChats(prev => {
       const next = prev.filter(c => c.id !== id)
       if (next.length === 0) {
@@ -510,8 +643,10 @@ export default function App() {
     setEditTitle(currentTitle)
   }
 
-  const confirmRename = () => {
+  const confirmRename = async () => {
     if (!editingChatId) return
+    const nextTitle=editTitle.trim()||chats.find(c=>c.id===editingChatId)?.title||'New video'
+    if(desktop){try{await localBridge()!.request('/api/projects',{id:editingChatId,title:nextTitle})}catch(e){setBackendError(e instanceof Error?e.message:'Could not rename session');return}}
     setChats(prev =>
       prev.map(c => (c.id === editingChatId ? { ...c, title: editTitle.trim() || c.title } : c))
     )
@@ -626,12 +761,12 @@ export default function App() {
                     </div>
                   ) : (
                     <>
-                      <span style={{ flex: 1, fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{chat.title}</span>
+                      <span style={{ flex: 1, fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{chat.title}{desktop&&newestTeam?.projectId===chat.id&&<span style={{display:'block',fontSize:10,color:'var(--faint)',marginTop:3}}>Latest team · {newestTeam.status}</span>}</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 2, opacity: 0 }} className="chat-actions">
                         <button onClick={e => { e.stopPropagation(); startRename(chat.id, chat.title) }} style={{ padding: 3, color: 'var(--faint)', background: 'none', border: 'none', cursor: 'pointer', minHeight: 'auto', borderRadius: 2 }}>
                           <Pencil size={11} />
                         </button>
-                        <button onClick={e => { e.stopPropagation(); deleteChat(chat.id) }} style={{ padding: 3, color: 'var(--faint)', background: 'none', border: 'none', cursor: 'pointer', minHeight: 'auto', borderRadius: 2 }}>
+                        <button title={desktop?'Archive session (preserves artifacts)':'Delete session'} onClick={e => { e.stopPropagation(); void deleteChat(chat.id) }} style={{ padding: 3, color: 'var(--faint)', background: 'none', border: 'none', cursor:'pointer', minHeight: 'auto', borderRadius: 2 }}>
                           <Trash2 size={11} />
                         </button>
                       </div>
@@ -645,13 +780,13 @@ export default function App() {
               {authedUser && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 8px', marginTop: 4 }}>
                   <span style={{ fontSize: 10, color: 'var(--faint)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{authedUser}</span>
-                  <button
+                  {!desktop && <button
                     onClick={() => stdb.reducers?.signOut({})}
                     className="no-drag"
                     style={{ fontSize: 10, color: 'var(--faint)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, minHeight: 'auto', textDecoration: 'underline' }}
                   >
                     Sign out
-                  </button>
+                  </button>}
                 </div>
               )}
               <button
@@ -698,7 +833,7 @@ export default function App() {
             )}
             <div style={{ flex: 1, textAlign: 'center' }}>
               <span className="no-drag" style={{ fontSize: 12, fontWeight: 500, color: 'var(--muted)', letterSpacing: '0.02em' }}>
-                {activeChat.title}
+                {desktop?'Session: ':''}{activeChat.title}
               </span>
             </div>
             <div className="no-drag" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -733,10 +868,12 @@ export default function App() {
                 onMouseLeave={e => { if (!panelOpen) e.currentTarget.style.background = 'transparent' }}
               >
                 {panelOpen ? <PanelRightClose size={14} /> : <PanelRight size={14} />}
-                Browser
+                Workspace
               </button>
             </div>
           </div>
+
+          {desktop && <AgentSpotlight agents={AGENTS.map(a=>({...a,desc:roleState(a)?.task||a.desc}))} roleIds={AGENT_ROLE_IDS} jobs={visibleJobs} selected={targetAgent || selectedAgent} onSelect={agent=>{const artwork=AGENTS.find(a=>a.id===agent.id);if(artwork)taskAgent(artwork)}} stale={!!backendError} onHistory={()=>{setPanelOpen(true);setPanelTab('timeline')}}/>}
 
           {/* Content row: messages + optional panel */}
           <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
@@ -745,7 +882,22 @@ export default function App() {
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
               <div style={{ flex: 1, overflowY: 'auto', background: 'var(--canvas)' }}>
                 <div style={{ maxWidth: 680, margin: '0 auto', padding: '24px 20px' }}>
-                  {activeChat.messages.map(msg => (
+                  {desktop&&newestTeamSession&&newestTeamSession.id!==activeChatId&&<div style={{display:'flex',alignItems:'center',gap:12,padding:'10px 12px',border:'1px solid var(--line)',borderRadius:6,marginBottom:18,fontSize:11}}>
+                    <div style={{flex:1,minWidth:0,color:'var(--muted)'}}>Latest team is in {newestTeamSession.title}<div style={{fontSize:10,color:'var(--faint)',marginTop:3}}>{newestTeamSession.id} · {newestTeam.status} · {runTimestamp(newestTeam.createdAt)}</div></div>
+                    <button onClick={()=>setActiveChatId(newestTeamSession.id)} style={{...gateLink,width:'auto',marginTop:0,padding:'6px 8px',border:'1px solid var(--line)',color:'var(--text)'}}>Open latest team session</button>
+                  </div>}
+                  {desktop&&<div style={{marginBottom:18}}><button disabled={localBusy||projectJobs.some(j=>['queued','running'].includes(j.status))||!backend.credentials?.gemini?.configured||!backend.credentials?.elevenlabs?.configured} onClick={()=>void localAction('/api/jobs',{kind:'agent_swarm',projectId:activeChatId,prompt:input.trim()||'Create a polished sound-design and Gaussian-edit preparation team for the existing five-second donkey eating an orange clip. Protect the donkey and environment. Plan orange-to-apple replacement including slices, peel and mouth contact, without claiming it executed. Allocate at least three separate sound specialists for quiet outdoor ambience, donkey chewing/foley and delicate fruit/bowl handling. Keep the layers isolated, natural and without speech or music.'})} style={{border:'1px solid var(--line)',background:'var(--panel)',color:'var(--text)',padding:'10px 14px',borderRadius:7,cursor:'pointer'}}>Start scene team</button><div style={{fontSize:10,color:'var(--muted)',marginTop:5}}>Donkey source · Gemini + 3–4 sound effects · uses API credits</div></div>}
+                  {desktop&&currentRun&&<section aria-label="Current run" data-current-run={currentRun.id} style={{marginBottom:22,border:'1px solid var(--line-strong)',borderRadius:8,padding:14}}>
+                    <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:6}}><span style={{fontSize:10,fontWeight:600,letterSpacing:'0.06em',textTransform:'uppercase',color:'var(--faint)',flex:1}}>Current run</span><span style={{fontSize:11,color:/blocked|fail|error|reject/i.test(String(currentRun.status))?'#ef9999':'var(--muted)'}}>{currentRun.status}</span></div>
+                    <div style={{fontSize:14,fontWeight:600}}>{runLabel(currentRun,roleArtwork(currentRun.agentId))}</div>
+                    <div style={{fontSize:10,color:'var(--faint)',marginTop:5,marginBottom:10}}>Submitted {runTimestamp(currentRun.createdAt)}</div>
+                    {currentRun.kind!=='agent_swarm'&&currentRun.stage&&!runProblem(currentRun)&&<div style={{fontSize:12,lineHeight:1.5,color:'var(--muted)'}}>{currentRun.stage}</div>}
+                    <RunProblem job={currentRun} onEnvironment={openEnvironment}/>
+                    {currentRun.kind==='agent_swarm'&&currentRun.status==='blocked'&&<button disabled={localBusy} onClick={()=>void localAction('/api/jobs',{kind:'agent_swarm',projectId:activeChatId,prompt:currentRun.prompt,resumeJobId:currentRun.id})} style={{padding:'8px 12px',marginTop:10,marginBottom:14,color:'var(--text)',background:'var(--panel)',border:'1px solid var(--line)',borderRadius:6}}>Resume unfinished tasks</button>}
+                    {currentRun.kind==='agent_swarm'&&<LiveSwarm key={currentRun.id} job={currentRun} artwork={roleArtwork} onAssign={assignRunTask}/>}
+                    <RunDetails job={currentRun} artwork={roleArtwork(currentRun.agentId)}/>
+                  </section>}
+                  {activeChat.messages.filter(msg=>!currentRun||msg.id!==WELCOME.id).map(msg => (
                     <div key={msg.id} style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
                       <div style={{
                         width: 28, height: 28, borderRadius: '50%', display: 'flex',
@@ -766,7 +918,10 @@ export default function App() {
                     </div>
                   ))}
 
-                  {revealedAgents.length > 0 && (
+                  {desktop && backendError && <div role="alert" style={{fontSize:12,color:'#f87171',marginBottom:16}}>{backendError}</div>}
+                  {desktop && actionError && <div role="alert" style={{display:'flex',alignItems:'start',gap:10,fontSize:12,color:'#f87171',marginBottom:16}}><span style={{flex:1}}>{actionError}</span><button aria-label="Dismiss action error" onClick={()=>setActionError('')} style={{padding:0,background:'none',border:0,color:'inherit',cursor:'pointer'}}><X size={14}/></button></div>}
+                  {desktop&&<RunHistory key={activeChatId} jobs={pastRuns} artwork={roleArtwork} onEnvironment={openEnvironment} onAssign={assignRunTask}/>}
+                  {!desktop && revealedAgents.length > 0 && (
                     <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
                       <div style={{
                         width: 28, height: 28, borderRadius: '50%', display: 'flex',
@@ -818,9 +973,9 @@ export default function App() {
                   {targetAgent && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6, padding: '4px 8px', borderRadius: 3, background: 'var(--panel)', border: '1px solid var(--line)', width: 'fit-content' }}>
                       <img src={targetAgent.gif} alt="" style={{ width: 20, height: 12, borderRadius: 2, objectFit: 'cover' }} />
-                      <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text)' }}>@{targetAgent.agent}</span>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text)' }}>@{targetAgent.agent}{targetPartId?` / ${targetPartId}`:''}</span>
                       <button
-                        onClick={() => setTargetAgent(null)}
+                        onClick={() => {setTargetAgent(null);setTargetPartId(null)}}
                         style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', minHeight: 'auto' }}
                       >
                         <X size={12} style={{ color: 'var(--faint)' }} />
@@ -858,7 +1013,7 @@ export default function App() {
                     </button>
                   </div>
                   <p style={{ fontSize: 10, color: 'var(--faint)', textAlign: 'center', marginTop: 6 }}>
-                    Agents generate scripts, visuals, voiceover &amp; edits from your prompt.
+                    {targetAgent?'Send to '+targetAgent.agent:'Enter to send · Shift + Enter for a new line'}
                   </p>
                 </div>
               </div>
@@ -867,14 +1022,14 @@ export default function App() {
             {/* Right panel (browser) */}
             {panelOpen && (
               <div style={{
-                width: 380, flexShrink: 0, display: 'flex', flexDirection: 'column',
+                width: panelTab==='timeline'?500:440, maxWidth:'48%', flexShrink: 0, display: 'flex', flexDirection: 'column',
                 borderLeft: '1px solid var(--line)', background: 'var(--chrome)',
               }}>
                 {/* Panel tabs */}
                 <div style={{
                   display: 'flex', borderBottom: '1px solid var(--line)', flexShrink: 0,
                 }}>
-                  {(['video', 'contents', 'environment'] as PanelTab[]).map(tab => (
+                  {(['video', 'contents', 'timeline', 'environment'] as PanelTab[]).map(tab => (
                     <button
                       key={tab}
                       onClick={() => setPanelTab(tab)}
@@ -886,7 +1041,7 @@ export default function App() {
                         borderBottom: panelTab === tab ? '2px solid var(--text)' : '2px solid transparent',
                       }}
                     >
-                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                      {tab==='timeline'?'Agent Timeline':tab.charAt(0).toUpperCase() + tab.slice(1)}
                     </button>
                   ))}
                 </div>
@@ -894,7 +1049,67 @@ export default function App() {
                 {/* Panel content */}
                 <div style={{ flex: 1, overflowY: 'auto', padding: 0 }}>
 
-                  {panelTab === 'video' && (
+                  {desktop && panelTab === 'video' && <div>
+                    {latestSwarm&&localRows(latestSwarm.workers).filter(w=>w.roleId==='sound-agents'&&w.status==='completed'&&w.execution==='elevenlabs_sound'&&w.mediaId).length>=3&&<SceneAudioMixer key={latestSwarm.id} job={latestSwarm} busy={localBusy||projectJobs.some(j=>['queued','running'].includes(j.status))} onExport={gains=>void localAction('/api/jobs',{kind:'sound_mix',projectId:activeChatId,sourceJobId:latestSwarm.id,gains})}/>}
+                    {!projectMedia.length && <div style={{aspectRatio:'16/9',background:'#000',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,color:'#777'}}>No video generated for this session</div>}
+                    {projectMedia.filter(m=>m.kind!=='image').map(m=><div key={m.id} style={{borderBottom:'1px solid var(--line)',paddingBottom:10}}>
+                      {safeMedia(m.url) ? m.kind==='video'?<video controls preload="metadata" src={safeMedia(m.url)} style={{width:'100%',background:'#000'}}/>:m.kind==='audio'?<audio controls preload="metadata" src={safeMedia(m.url)} style={{width:'100%',padding:10}} aria-label={String(m.title||'Generated sound effect')}/>:<img src={safeMedia(m.url)} alt={String(m.title||'Reference')} style={{width:'100%',objectFit:'contain',background:'#000'}}/>:<div>Artifact URL unavailable</div>}
+                      <div style={{padding:'8px 12px',fontSize:12}}>{m.title}<div style={{fontSize:10,color:'var(--faint)',marginTop:4}}>{typeof m.review==='string'?m.review:'Not reviewed'}</div></div>
+                    </div>)}
+                    {projectMedia.filter(m=>m.kind==='image').map(m=><details key={m.id} style={{padding:12,borderBottom:'1px solid var(--line)',fontSize:12}}><summary style={{cursor:'pointer'}}>{m.title}</summary>{safeMedia(m.url)&&<img src={safeMedia(m.url)} alt={m.title} style={{width:'100%',marginTop:8}}/>}<small style={{color:'var(--muted)'}}>{m.review}</small></details>)}
+                    <div style={{padding:'12px 12px 6px',fontSize:11,color:'var(--faint)'}}>Agent protocol · {AGENTS.length} specialist roles</div>
+                    {AGENTS.map(a=><DesktopAgentCard key={a.id} agent={a} state={roleState(a)} parts={projectParts} onTask={()=>taskAgent(a)}/>)}
+                  </div>}
+                  {desktop && panelTab === 'contents' && <div style={{padding:12}}>
+                    <div style={{fontSize:10,color:'var(--faint)',textTransform:'uppercase',marginBottom:10}}>Parts & tasks</div>
+                    {!projectParts.length&&<p style={{fontSize:12,color:'var(--muted)'}}>No parts assigned.</p>}
+                    {projectParts.map(p=><div key={p.id} style={{padding:'10px 8px',borderBottom:'1px solid var(--line-soft)',fontSize:12}}>
+                      <strong>{p.label||p.id}</strong>
+                      <div style={{fontSize:10,color:'var(--faint)',marginTop:4}}>{partContentState(p,projectJobs,projectMedia).label}</div>
+                      {p.bindingVerified===true && partContentState(p,projectJobs,projectMedia).requiresGeometryBinding && <div style={{fontSize:11,color:'var(--muted)',lineHeight:1.5,marginTop:7}}>
+                        <div>Binding scope: {p.bindingScope || 'Canonical asset only; scene placement and contact are unverified.'}</div>
+                        <div style={{marginTop:4,color:/reject|coarse|fail/i.test(String(p.geometryQuality||''))?'#ef9999':'var(--faint)'}}>Geometry quality: {p.geometryQuality || 'Not accepted or visually verified.'}</div>
+                      </div>}
+                      <div style={{display:'flex',alignItems:'center',gap:8,marginTop:8}}>
+                        <img src={partArtwork(p).gif} alt="Owner role illustration" style={{width:40,height:23,objectFit:'cover',borderRadius:3}}/>
+                        <div style={{fontSize:11,color:'var(--muted)'}}>{p.ownerRoleId||p.roleId ? partArtwork(p).agent : p.agentId || 'Owner not yet assigned'}<div style={{fontSize:10,color:'var(--faint)',marginTop:3}}>{p.task || 'No task yet'}</div></div>
+                      </div>
+                      <button onClick={()=>taskAgent(partArtwork(p),p)} style={{...gateLink,textAlign:'left',padding:0}}>Assign task for this part</button>
+                    </div>)}
+                  </div>}
+                  {desktop && panelTab === 'timeline' && <AgentTimeline projectId={activeChatId} jobs={visibleJobs} recentRunIds={[currentRun?.id,latestSwarm?.id].filter(Boolean)} agents={projectAgents} parts={projectParts} dark={isDark} onRun={async task=>{await localBridge()!.request('/api/jobs',{kind:'agent_task',projectId:activeChatId,...task});await refreshBackend()}}/>}
+                  {desktop && panelTab === 'environment' && <div style={{padding:12,fontSize:12}}>
+                    <div style={{fontSize:10,color:'var(--faint)',textTransform:'uppercase',marginBottom:10}}>Models & remote environment</div>
+                    <p style={{color:'var(--muted)',marginBottom:12}}>Shared owner credentials · encrypted locally</p>
+                    <div style={{border:'1px solid var(--line)',borderRadius:3,marginBottom:14}}>
+                      {['gemini','runway','runpod','elevenlabs'].map(provider=><div key={provider} style={{padding:'8px 10px',borderBottom:'1px solid var(--line-soft)'}}>
+                        <span style={{textTransform:'capitalize',fontWeight:600}}>{provider}</span>
+                        <span style={{float:'right',fontSize:11,color:backend.credentials?.[provider]?.configured?'var(--muted)':'var(--faint)'}}>{backend.credentials?.[provider]?.configured?'Key saved':'Not configured'}</span>
+                        {backend.credentials?.[provider]?.error&&<div role="alert" style={{fontSize:10,color:'#ef9999',marginTop:4}}>Provider unavailable. Owner configuration needs attention.</div>}
+                      </div>)}
+                    </div>
+                    <ElevenLabsSettings configured={!!backend.credentials?.elevenlabs?.configured} save={async key=>{await localBridge()!.request('/api/credentials',{provider:'elevenlabs',key});await refreshBackend()}}/>
+                    <p style={{fontSize:10,color:'var(--faint)',marginBottom:14}}>Keys are checked when a task runs.</p>
+                    <label style={gateLabel}>Existing pod<input value={remotePod} onChange={e=>setRemotePod(e.target.value)} placeholder={backend.remote?.podId||'Pod ID'} style={gateInput}/></label>
+                    <input value={remoteUrl} onChange={e=>setRemoteUrl(e.target.value)} placeholder="https://…proxy.runpod.net" style={{...gateInput,marginBottom:8}}/>
+                    <button disabled={localBusy||!remoteUrl||!(remotePod||backend.remote?.podId)} style={gatePrimary} onClick={()=>void localAction('/api/remote/connect',{podId:remotePod||backend.remote?.podId,baseUrl:remoteUrl})}>Connect existing remote</button>
+                    <p style={{fontSize:11,color:'var(--faint)',margin:'8px 0'}}>GPU: {backend.remote?.status||'Not connected'}</p>
+                    {remoteError&&<div role="alert" style={{fontSize:11,lineHeight:1.5,color:'#ef9999',marginBottom:10}}>{remoteError}{typeof backend.remote?.errorCode==='string'&&<div style={{fontSize:10,marginTop:3}}>Code: {backend.remote.errorCode}</div>}{typeof backend.remote?.checkedAt==='string'&&<div style={{fontSize:10,color:'var(--faint)',marginTop:3}}>Checked: {backend.remote.checkedAt}</div>}</div>}
+                    <button disabled={localBusy} style={{...gateLink,border:'1px solid var(--line)'}} onClick={()=>void localAction('/api/jobs',{kind:'remote_preflight',projectId:activeChatId})}>Check remote GPU</button>
+                    <button disabled={localBusy||!referencePrompt} style={{...gateLink,border:'1px solid var(--line)'}} onClick={()=>void localAction('/api/jobs',{kind:'gemini_reference',projectId:activeChatId,prompt:referencePrompt})}>Generate project reference (API credits)</button>
+                    {activeChatId==='apple-experiment'&&<div style={{border:'1px solid var(--line)',borderRadius:3,padding:10,marginTop:10}}>
+                      <div style={{fontSize:11,fontWeight:600}}>Orange → apple scene replacement</div>
+                      <div style={{fontSize:11,lineHeight:1.5,color:appleReplacement.ready?'var(--muted)':'#ef9999',marginTop:6}}>{appleReplacement.reason}</div>
+                      {appleReplacement.missing.length>0&&<ul style={{fontSize:10,color:'var(--muted)',paddingLeft:16,margin:'8px 0',lineHeight:1.6}}>{appleReplacement.missing.map((item,index)=><li key={index}>{item}</li>)}</ul>}
+                      <div style={{fontSize:10,color:'var(--faint)',marginTop:6}}>Pipeline revision: {appleReplacement.revision || 'Not supplied by backend'}</div>
+                      <button disabled={localBusy||!appleReplacement.ready} title={appleReplacement.ready?'Run the backend-verified replacement pipeline':'Blocked: do not repeat the rejected static-apple worker'} style={{...gateLink,border:'1px solid var(--line)',opacity:appleReplacement.ready?1:0.5,cursor:appleReplacement.ready?'pointer':'not-allowed'}} onClick={()=>{if(appleReplacement.ready)void localAction('/api/jobs',{kind:'apple_experiment',projectId:activeChatId})}}>{appleReplacement.ready?'Run repaired orange → apple experiment':'Replacement pipeline unavailable'}</button>
+                    </div>}
+                    <p style={{fontSize:10,color:'var(--faint)',marginTop:8}}>Reference = still image, using the current prompt.</p>
+                    <button disabled={localBusy||!backend.remote?.podId} style={{...gateLink,color:'#ef9999'}} onClick={()=>{if(window.confirm('Stop the connected pod? Running work will be interrupted.'))void localAction('/api/remote/stop',{podId:backend.remote?.podId})}}>Stop remote pod</button>
+                    <div style={{fontSize:10,color:'var(--faint)',textTransform:'uppercase',margin:'18px 0 8px'}}>Live protocol roles</div>
+                    {AGENTS.map(a=><div key={a.id} style={{display:'flex',gap:8,alignItems:'center',padding:'7px 0',borderBottom:'1px solid var(--line-soft)'}}><img src={a.gif} alt="" style={{width:28,height:16,objectFit:'cover',borderRadius:2}}/><span style={{flex:1,fontSize:11}}>{a.agent}</span><span style={{fontSize:10,color:'var(--faint)',maxWidth:130,textAlign:'right'}}>{roleState(a)?.status||'No task submitted'}</span></div>)}
+                  </div>}
+                  {!desktop && panelTab === 'video' && (
                     <div style={{ padding: 0 }}>
                       {/* Video preview */}
                       <div style={{
@@ -981,7 +1196,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {panelTab === 'contents' && (
+                  {!desktop && panelTab === 'contents' && (
                     <div style={{ padding: '12px' }}>
                       <div style={{ padding: '0 0 8px', fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--faint)' }}>
                         Output Contents
@@ -1036,7 +1251,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {panelTab === 'environment' && (
+                  {!desktop && panelTab === 'environment' && (
                     <div style={{ padding: '12px' }}>
                       <div style={{ padding: '0 0 8px', fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--faint)' }}>
                         Models
@@ -1174,24 +1389,3 @@ export default function App() {
   )
 }
 
-function getAgentReply(_input: string): { content: string; agents: AgentNote[] } {
-  return {
-    content: 'Spawning ~175 agents for your video. Each one is working on its piece:',
-    agents: [
-      { agentId: '50', note: "I'm the controller. I own the 60-second budget and I'll time every stage so nothing runs over." },
-      { agentId: '49', note: "Writing your script right now. Once I'm done I'll hand off to Crawler and Decision." },
-      { agentId: '51', note: "Building image search queries from the script. I figure out what visuals we need." },
-      { agentId: '52', note: "I pick the best photos from crawl results and answer the fur, ground, bone-name forms." },
-      { agentId: '53', note: "One yes/no question per photo. I'm fast: just tell me what to look for." },
-      { agentId: '54', note: "Four of us, one per section: look, material, gait, ground texture. We lead the detail work." },
-      { agentId: '55', note: "~35 of us, one tiny agent per number or word inside a section. We fill in every attribute." },
-      { agentId: '56', note: "I list every kind of surrounding object and their proportions in the scene." },
-      { agentId: '57', note: "Five of us checking each kind: 'is this actually a physical object?' Yes or no." },
-      { agentId: '58', note: "72 of us, one per surrounding object. We figure out exactly where it sits and how big it is." },
-      { agentId: '59', note: "I decide which Vector Agents to spawn based on what body parts need to move." },
-      { agentId: '60', note: "V1 through V7. Each of us drives one body part movement in the animation." },
-      { agentId: '61', note: "I pick which contacts make sound. Footsteps, impacts, surfaces." },
-      { agentId: '62', note: "44 of us. Every single decision gets checked against physics or maths law." },
-    ],
-  }
-}

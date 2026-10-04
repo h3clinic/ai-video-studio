@@ -1,6 +1,36 @@
 node_modules/
 dist/
 release/
+# Only reviewed Python source and its manifest belong in the backend bundle.
+/backend/*
+!/backend/real_video/
+!/backend/cloud/
+!/backend/gv/
+!/backend/tests/
+/backend/*/*
+!/backend/real_video/*.py
+!/backend/cloud/*.py
+!/backend/gv/*.py
+!/backend/tests/*.py
+!/backend/source-manifest.json
+artifacts/
+.venv/
+__pycache__/
+*.py[cod]
+*.dpapi
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+*.sqlite*
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.npz
 .DS_Store
 .env*
 .claude/settings.local.json
+# Superseded workstation-only test helper; not a release verification.
+/electron/smoke.cjs
