@@ -1,0 +1,60 @@
+Portable sponsor-demo editor
+============================
+
+This is an offline edit of existing media, not a recorder or a model runner.
+Use Python 3.10+ with Pillow 10+ and either FFmpeg on PATH, imageio-ffmpeg, or
+an explicit --ffmpeg executable. FFmpeg needs libx264 and the ass subtitle filter.
+Install dependencies in a project-local virtual environment, not globally.
+
+From the app repository (replace all media/output placeholders):
+
+python tools/render-demo.py --script docs/demo-script.txt --mix PATH/scene_with_sound.mp4 --capture PATH/app-only.mp4 --output PATH/demo-180s.mp4 --github https://github.com/OWNER/REPO
+
+All four input/output flags are required; no workstation recording or mix is
+selected implicitly. --frontend defaults to this repository and supplies the
+existing public/videos/agent-*.mp4 role illustrations. --ffmpeg PATH overrides
+encoder discovery. --test-title makes a two-second preview at --output, not a
+full demo; it still requires the explicit inputs. Existing output MP4s and JSON
+manifests are never overwritten.
+
+The supplied six-section script covers exactly 0–180 seconds. Headings use
+"00:00–00:30 — Title", followed by nonempty narration. A legacy nine-section
+layout is also supported. Sections must be contiguous and long enough for the
+editor's cuts; the renderer rejects gaps, overlaps, zero-length sections, and
+invalid cuts. Captions are an estimated narration guide; no voice is synthesized.
+
+For deliberate shot selection, add --capture-map PATH/capture-map.json:
+
+{
+  "1_5": {"start": 12, "duration": 25, "crop": [0, 0, 1920, 900]},
+  "3": {"capture": "second-app-only.mp4", "start": 40, "duration": 10}
+}
+
+Keys are segment numbers or SEGMENT_STARTSECOND for a particular app shot.
+Shot-specific entries take precedence. A capture override is resolved relative
+to the JSON file, not the current directory. Each crop is [x, y, width, height]
+in that source's pixels. Crops must fit its actual dimensions. Excerpts shorter
+than a shot hold their last genuine frame; the manifest identifies this. Without
+a map, excerpts are distributed automatically and need manual alignment review.
+
+The editor saves intermediate cards, captions, and clips beside --output and a
+same-stem JSON manifest with hashes, per-shot capture source/crop, held-frame
+flags, and audio placement. It uses at most four encoder threads and makes no
+provider/API/model calls. Source files are read only. Remove intermediates only
+after checking the finished output; the tool does not clean them up automatically.
+
+Provenance and presentation caveats
+-----------------------------------
+Use app-only footage, never a desktop recording or frames containing credentials.
+Inspect every shot and listen to the complete result before sharing. Existing
+mixed sound is repeated in the audio section, and the short output clip is looped
+for review. The source/mix hashes document inputs, not perceptual quality or
+event-level audiovisual synchronization. Card text assumes the recorded demo's
+17 workers and three generated sound layers; verify it if using different media.
+Role artwork is illustrative. This editorial video does not establish successful
+Gaussian replacement, measured generation speedups, or new scene generation.
+The base sound export's preserved visuals are distinct from this cropped,
+captioned, re-encoded presentation. Review the manifest for exact provenance.
+
+Validation without rendering or API calls:
+python -B -m unittest discover -s tools/tests -p test_render_demo.py -v
